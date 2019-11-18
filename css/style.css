@@ -459,7 +459,9 @@ input[type="radio"]:not(:checked) + label:after {
   content: "\e88d";
 }
 
-
+.icon-juejin:before {
+  content: "\e88f";
+}
 .header-logo a {
   padding: 0;
 }
