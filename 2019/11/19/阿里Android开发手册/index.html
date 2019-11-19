@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kyne">
+
+
+
+
+
+<title>阿里Android开发手册 | KyneZone</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kyne&#39;s Zone</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kyne&#39;s Zone</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">阿里Android开发手册</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Kyne</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 19, 2019&nbsp;&nbsp;15:59:58</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h4><p><em>layout、drawable、anim、color、dimen、style、string</em></p>
+<h4 id="基本组件"><a href="#基本组件" class="headerlink" title="基本组件"></a>基本组件</h4><ol>
+<li>activity间通讯数据量大使用<strong>EventBus</strong></li>
+<li>持久化存储应该在activity#onPause()/onStrop()中实行</li>
+<li>Intent隐式跳转前通过<strong>resolveActivity</strong>检查</li>
+<li>Activity#onSaveInstanceState()用来保存Activity被意外销毁时保存UI状态，只能保存临时性数据，比如UI控件的属性等。</li>
+<li>Activity 间通过隐式 Intent 的跳转，在发出 Intent 之前必须通过resolveActivity检查。</li>
+<li>Service#onStartCommand()/onBind()不可执行耗时操作，改用<strong>IntentService</strong></li>
+<li>避免在 BroadcastReceiver#onReceive()中执行耗时操作，如果有耗时工作， 应该创建 IntentService</li>
+<li>如果广播仅限于应用内，则可以使用 LocalBroadcastManager#sendBroadcast()实现，避免敏感信息外泄和 Intent 拦截的风险。</li>
+<li>对于只用于应用内的广播，优先使用LocalBroadcastManager来进行注册和发送，LocalBroadcastManager安全性更好，同时拥有更高的运行效率</li>
+<li>确保FragmentTransaction#commit()在 Activity#onPostResume()或者 FragmentActivity#onResumeFragments()内调用。</li>
+<li>不要在Activity#onDestroy()内执行释放资源的工作</li>
+<li>避免使用嵌套的Fragment。<blockquote>
+<p>1) onActivityResult()方法的处理错乱，内嵌的  Fragment 可能收不到该方法的回调， 需要由宿主 Fragment 进行转发处理;<br>2) 突变动画效果;<br>3) 被继承的 setRetainInstance()，导致在 Fragment 重建时多次触发不必要的逻辑。</p>
+</blockquote>
+</li>
+<li>尽量使用显示Intent启动或绑定Service。隐式必须搭配使用setPackage()方法设置Intent的指定包名。</li>
+<li>onPause方法中不适合做耗时较长的工作</li>
+<li>Activity或者Fragment中动态注册BroadCastReceiver时，registerReceiver()和unregisterReceiver()要成对出现</li>
+</ol>
+<h4 id="UI与布局"><a href="#UI与布局" class="headerlink" title="UI与布局"></a>UI与布局</h4><ol>
+<li><p>推荐merge、ViewStub来优化布局</p>
+</li>
+<li><p>不能在Activity没有完全显示时显示PopupWindow和Dialog</p>
+<blockquote>
+<p>推荐 Activity#onAttachedToWindow()之后。最好是在onWindowFoucsChanged()之后</p>
+</blockquote>
+</li>
+<li><p>尽量不用animationDrawable,帧动画，少量可以</p>
+</li>
+<li><p>不要使用ScrollView嵌套ListView/GridView/RecyclerView</p>
+<blockquote>
+<p>推荐使用NestedScrollView</p>
+</blockquote>
+</li>
+<li><p>使用Toast建议定义一个全局对象</p>
+</li>
+<li><p>Adapter item对每个子控件都要设置属性，由于item复用原因</p>
+</li>
+<li><p>在需要时刻刷新某一区域的组件时，建议通过以下方式避免引发全局 layout 刷新:</p>
+<blockquote>
+<p>1) 设置固定的View大小的宽高，如倒计时组件等;<br>2) 调用View的layout方法修改位置，如弹幕组件等;<br>3) 通过修改Canvas位置并且调用invalidate(int l, int t, int r, int b)等方法限定刷新区域<br>4) 通过设置一个是否允许requestLayout的变量，然后重写控件的requestLayout、onSizeChanged方法， 判断控件的大小没有改变的情况下，当进入requestLayout的时候，直接返回而不调用super的requestLayout方法</p>
+</blockquote>
+</li>
+<li><p>不要在Android的Application对象中缓存数据</p>
+</li>
+</ol>
+<h4 id="进程、线程与消息通信"><a href="#进程、线程与消息通信" class="headerlink" title="进程、线程与消息通信"></a>进程、线程与消息通信</h4><ol>
+<li>在Application的业务初始化代码中加入进程判断，确保只在自己需要的进程中初始化。</li>
+<li>新建线程时，必须通过线程池提供，节约开支<blockquote>
+<p><em>使用线程池的好处</em><br>1) 减少在创建和销毁线程上所花的时间及系统资源 的开销。<br>2) 解决资源不足问题<br>3) 如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者切换过度的问题<br>4) 创建匿名线程不便与后续的资源使用分析、性能分析。</p>
+</blockquote>
+</li>
+<li>线程池不允许使用Executors去创建</li>
+<li>ThreadPoolExecutor设置线程存活时间（setKeepAliveTime），确保空闲时线程被释放</li>
+<li>禁止在多线程之间用SharePreferences共享数据，官方不推荐</li>
+</ol>
+<h4 id="文件与数据库"><a href="#文件与数据库" class="headerlink" title="文件与数据库"></a>文件与数据库</h4><ol>
+<li>应用间共享文件时，不要通过放宽文件系统权限的方式，而应使用FileProvider</li>
+<li>执行SQL语句时，应使用 SQLiteDatabase#insert()、update()、delete()，不要使用 SQLiteDatabase#execSQL()，以免SQL注入风险</li>
+<li>SharedPreference提交数据时，commit和apply的区别：<blockquote>
+<p>apply首先写入内存，然后异步写入磁盘,commit 直接写入磁盘</p>
+</blockquote>
+</li>
+<li>多线程操作写入数据库时，需要使用事务。通过SQLiteOpenHelper</li>
+</ol>
+<h4 id="Bitmap、Drawable与动画"><a href="#Bitmap、Drawable与动画" class="headerlink" title="Bitmap、Drawable与动画"></a>Bitmap、Drawable与动画</h4><ol>
+<li>加载大图片或者一次性加载多张图片，应该在异步线程中进行。图片的加载，涉及到IO操作，以及CPU密集操作，很可能引起卡顿</li>
+<li>使用完毕的图片，应该及时回收，释放宝贵的内存<blockquote>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    if (Build.VERSION.SDK_INT &lt;= Build.VERSION_CODES.GINGERBREAD_MR1) &#123;</span><br><span class="line">        bitmap.recycle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>页面退出，及时清理动画资源  Activity#onPause()或 Activity#onStop()</li>
+<li>在ListView、ViewPager、RecyclerView、GridView等组件使用图片时，应做好图片的缓存。推荐使用Fresco、Glide等图片库。</li>
+<li>png图片使用TinyPNG或类似工具压缩处理，减少包体积</li>
+<li>应根据实际展示需求，压缩图片，而不是直接使用原图</li>
+<li>在Activity#onPause()或onStop()回调中，关闭当前activity正在执行的动画</li>
+<li>使用inBitmap重复利用内存空间，避免重复开辟新内存</li>
+<li>RGB_565没有透明度。</li>
+</ol>
+<h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><ol>
+<li>将 android:allowbackup 属性必须设置为 false，阻止应用数据被导出</li>
+<li>在 SDK 支持的情况下，Android 应用必须使用 V2 签名，这将对 APK 文 件的修改做更多的保护。</li>
+<li>不应在没有严格权限控制的情况下，将 android:exported 设置为 true。</li>
+<li>所以在产品的线上版本中关闭调试接口，不要输出敏感信息。</li>
+<li>确保应用发布版本的 android:debuggable 属性设置为 false。</li>
+<li>Android APP 在 HTTPS 通信中，验证策略需要改成严格模式</li>
+<li>在 Android 4.2(API Level 17)及以上，对安全性要求较高的应用可在 Activity中，对 Activity 所关联的 Window 应用 WindowManager.LayoutParams.FLAG_SECURE，防止被截屏、录屏</li>
+<li>本地加密密钥不能硬解码在代码中，更不能本地缓存机制缓存</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Kyne</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Thinking is the proof of one's life.</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();" target="_blank" rel="noopener">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/19/Android%E7%BB%84%E4%BB%B6%E6%B1%87%E6%80%BB/">Android组件汇总</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/18/GitHub%20Pages%20+%20Hexo%20%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/">GitHub Pages + Hexo 个人网页搭建过程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Kyne | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

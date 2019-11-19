@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kyne">
+
+
+
+
+
+<title>Android组件汇总 | KyneZone</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kyne&#39;s Zone</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kyne&#39;s Zone</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Android组件汇总</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Kyne</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 19, 2019&nbsp;&nbsp;16:00:48</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="一-、基本控件"><a href="#一-、基本控件" class="headerlink" title="一 、基本控件"></a>一 、基本控件</h4><ol>
+<li><p><strong>TextView</strong></p>
+<ul>
+<li>HTextView 一款支持TextView文字动画效果的Android组件库。</li>
+<li>ScrollNumber 滚动数字控件</li>
+<li>ticker 滚动数字控件</li>
+<li>ReadMoreTextView 阅读更多，折叠文本</li>
+<li>ExpandableTextView 折叠文本</li>
+<li>android-autofittextview 自动调整文字大小</li>
+<li>html-textview 展示html标签</li>
+<li>BabushkaText 自定义文本样式</li>
+<li>Android-TextView-LinkBuilder 文本链接</li>
+<li>TextJustify-Android 自动调整文字间隔</li>
+<li>SlantedTextView 一个倾斜的TextView,适用于标签效果。</li>
+<li>RichText Android平台下的富文本解析器</li>
+<li>MixtureTextView Android图文混排、文字环绕图片</li>
+<li>VerticalTextView 垂直的Textview</li>
+<li>JumpingBeans 文字像 Mexican beans 一样跳动</li>
+</ul>
+</li>
+<li><p><strong>EditText</strong></p>
+<ul>
+<li>MaterialEditText 智能提醒输入框</li>
+<li>android-edittext-validator 输入效验、提醒</li>
+<li>ClearEditText 带删除的输入框</li>
+<li>PasswordEditText 显示/隐藏密码</li>
+<li>MaterialSearchView 一个基于Material design 规范的Android搜索控件。MaterialSearchView显示在Toolbar 或者ActionBar上面，并为用户显示一个最近搜索或者搜索提示的列表。</li>
+</ul>
+</li>
+<li><p><strong>ImageView</strong></p>
+<ul>
+<li>CircleImageView 圆形图片</li>
+<li>android-gif-drawable 展示gif</li>
+<li>android-shape-imageview 自定义形状的ImageView</li>
+<li>android-combination-avatar 组合头像</li>
+<li>PaletteImageView懂得智能配色的ImageView,还能给自己设置多彩的阴影哦。</li>
+<li>PhotoView 支持双击或双指缩放的 ImageView</li>
+<li>subsampling-scale-image-view 支持放大、缩小</li>
+</ul>
+</li>
+<li><p><strong>Button</strong></p>
+<ul>
+<li>android-floating-action-button FloatingActionButton</li>
+<li>FloatingActionButton</li>
+<li>SwitchButton 开关按钮</li>
+<li>ShineButton 点赞效果</li>
+<li>LikeButton 点赞效果</li>
+<li>RapidFloatingActionButton 展开菜单</li>
+<li>android-flat-button 自定义按钮，支持圆角等</li>
+<li>android-process-button 带进度条的botton</li>
+<li>circular-progress-button 带完成动画的botton</li>
+<li>FABProgressCircle 带进度条的fabotton</li>
+<li>ProgressRoundButton 带进度条的botton</li>
+</ul>
+</li>
+<li><p><strong>Spinner</strong></p>
+<ul>
+<li>nice-spinner 美化的spinner</li>
+<li>MaterialSpinner</li>
+<li>BetterSpinner</li>
+<li>Material-Spinner</li>
+<li>SearchableSpinner 带搜索的spinner</li>
+</ul>
+</li>
+<li><p><strong>CheckBox</strong></p>
+<ul>
+<li>SmoothCheckBox 带动画的checkbox</li>
+<li>AnimateCheckBox 带动画的checkbox</li>
+</ul>
+</li>
+<li><p><strong>ProgressBar</strong>（包含loading动画）</p>
+<ul>
+<li>SmoothProgressBar</li>
+<li>NumberProgressBar 带数字的进度条</li>
+<li>android-square-progressbar 加载图片的进度条</li>
+<li>MaterialLoadingProgressBar</li>
+<li>circular-music-progressbar 播放音乐进度条</li>
+<li>materialish-progress</li>
+<li>Android-RoundCornerProgressBar 圆角进度条</li>
+<li>GoogleProgressBar 仿谷歌的进度条</li>
+<li>DownloadProgressBar 带下载动画的进度条</li>
+<li>ACProgressLite 仿IOS 进度条</li>
+<li>Android-SVProgressHUD 仿IOS 进度条</li>
+<li>MaterialProgressBar</li>
+<li>CircularProgressBar 圆环进度条</li>
+<li>Android-ProgressBarWidthNumber 带进度的进度条</li>
+<li>LoadingView 加载进度条</li>
+<li>LoadingDrawable 酷炫的android加载动画</li>
+<li>Android-SpinKit Android加载动画库</li>
+<li>AVLoadingIndicatorView 漂亮的加载动画</li>
+</ul>
+</li>
+<li><p><strong>Seekbar</strong></p>
+<ul>
+<li>RangeSeekBar 双向SeekBar</li>
+<li>IndicatorSeekBar 带进度的seekbar</li>
+<li>DragChooseView 仿微信设置字体</li>
+<li>FontSliderBar 仿微信设置字体</li>
+<li>DoubleSeekBar 带进度的seekbar</li>
+<li>CircleSeekbar 一个环形Seekbar组件,支持叠加复合使用</li>
+</ul>
+</li>
+<li><p><strong>RatingBar</strong></p>
+<ul>
+<li>MaterialRatingBar 与 Google 系应用设计相同、支持拉伸、修正原生实现诸多问题的星级评分条</li>
+</ul>
+</li>
+<li><p><strong>Toast</strong></p>
+<ul>
+<li>SuperToasts 丰富样式的 toast</li>
+<li>Crouton</li>
+<li>Android-AppMsg</li>
+<li>UndoBar 带按钮的toast</li>
+<li>Alerter Dropdown 风格的弹窗</li>
+<li>Toasty</li>
+<li>Sneaker</li>
+</ul>
+</li>
+<li><p><strong>RecyclerView</strong></p>
+<ul>
+<li>BaseRecyclerViewAdapterHelper 万能adapter</li>
+<li>MultiChoiceAdapter 多选adapter</li>
+<li>SwipeRecyclerView 基于RecyclerView的封装，提供了Item侧滑菜单、Item滑动删除、Item长按拖拽、添加HeaderView/FooterView、加载更多、Item点击监听等基本功能。</li>
+<li>EasyRecyclerView 封装RecyclerView</li>
+<li>StickyItemDecoration 悬浮头部</li>
+<li>PinnedSectionItemDecoration 悬浮头部</li>
+<li>recyclerview-animators RecycleView的项目动画的Android组件库</li>
+<li>UltimateRecyclerView 能强大的Recyclerview，包括了下拉刷新，加载更多，多种动画，空数据提示，拖动排序，视差处理，工具栏渐变，滑动删除，自定义floating button，多种刷新效果，scrollbar等等元素，而且使用起来跟recyclerview一样的方便。</li>
+<li>epoxy Epoxy采用可组合的方式来创建列表。列表中的每个item由一个model代表，model定义了item的布局，id以及span。model还负责处理数据到视图的绑定，在视图被回收的时候释放资源。如果要显示这些model则把它们添加到Epoxy的adapter中，adapter为你处理复杂的显示问题。</li>
+<li>XRecyclerView XRecyclerView实现了下拉刷新，滚动到底部加载更多以及添加header功能的的RecyclerView。使用方式和RecyclerView完全一致，不需要额外的layout，不需要写特殊的adater。 加载效果内置了AVLoadingIndicatorView上的所有效果，可以根据需要指定。</li>
+<li>RecyclerViewPager RecyclerViewPager基于 RecyclerView 实现的 ViewPager，可自定义 Page 切换敏感度，支持垂直 ViewPager，支持类 Gallary 效果，支持无限循环。</li>
+<li>SuperRecyclerView SuperRecyclerView主要特性包括：1、当adapter没有设置的时候使用ProgressBar（进度条）；2、当adapter时空的时候使用EmptyView；3、SwipeRefreshLayout (Google’s one)；4、Swipe To Dismiss；5、Sticky headers；6、无限滚动，当到达最后一项时，加载更多数据；</li>
+<li>LRecyclerView 下拉刷新，自动加载更多；仿IOS侧滑Item删除菜单</li>
+<li>LayoutManagerGroup 自定义RecyclerView 的LayoutManager实现几种炫酷的效果。</li>
+<li>android-advancedrecyclerview 自定义RecyclerView （2019-03-29 新增）</li>
+</ul>
+</li>
+<li><p><strong>日历、时钟</strong></p>
+<ul>
+<li>CalendarView 一个优雅、万能自定义UI、支持周视图、自定义周起始、性能高效的日历控件</li>
+<li>material-calendarview</li>
+<li>Caldroid</li>
+<li>android-times-square</li>
+<li>Android-Week-View 周视图</li>
+<li>android-calendar-view 显示阳历，农历，节假日和二十四节气 实现对某月日期的单选或者多选的andorid 日历控件库</li>
+<li>Simple-Calendar</li>
+<li>CountdownView 倒计时</li>
+<li>android-calendar-card 日历</li>
+<li>CosmoCalendar 高度自定义的日历库，UI精美，支持多种模式。</li>
+<li>CalendarExaple 高仿钉钉和小米的日历控件，支持快速滑动，界面缓存</li>
+</ul>
+</li>
+<li><p><strong>Webview</strong></p>
+<ul>
+<li>AgentWeb</li>
+<li>VasSonic 首屏加载速度快</li>
+<li>JsBridge</li>
+<li>chromeview 利用 Chromium 实现的 WebView</li>
+</ul>
+</li>
+<li><p><strong>ScrollView</strong></p>
+<ul>
+<li>Android-ObservableScrollView</li>
+<li>DiscreteScrollView 基于RecyclerView 实现的一个横向滑动列表</li>
+</ul>
+</li>
+<li><p><strong>ViewPager</strong></p>
+<ul>
+<li>VerticalViewPager 垂直的viewpager</li>
+<li>InfiniteCycleViewPager 3D的viewpager</li>
+<li>DiscreteScrollView</li>
+<li>ExpandingPager</li>
+<li>RecyclerViewSnap</li>
+<li>AndroidImageSlider</li>
+<li>ViewPagerIndicator</li>
+<li>RecyclerViewCardGallery RecyclerView实现Card Gallery效果，替代ViewPager方案</li>
+<li>JazzyViewPager 支持 Fragment 切换动画的 ViewPager，动画包括转盘、淡入淡出、翻页、层叠、旋转、方块、翻转、放大缩小等</li>
+<li>FlipViewPager.Draco Flip 翻转效果的 ViewPager</li>
+<li>UltraViewPager 封装多种特性的ViewPager，主要是为多页面切换场景提供统一解决方案。</li>
+<li>MaterialViewPager Material风格的viewpager</li>
+<li>WoWoViewPager 结合viewpager和动画，实现了一个漂亮的欢迎页</li>
+</ul>
+</li>
+<li><p><strong>WheelPicker</strong></p>
+<ul>
+<li>Android-PickerView iOS的PickerView控件，有时间选择和选项选择，并支持一二三级联动，支持自定义样式。</li>
+<li>androidWheelView</li>
+<li>WheelPicker</li>
+<li>AndroidPicker</li>
+<li>HorizontalWheelView 水平的wheelview</li>
+<li>WheelView-Android 带刻度的wheelview</li>
+</ul>
+</li>
+<li><p><strong>导航栏</strong></p>
+<ul>
+<li>BottomBar 一个Material Design风格的底部导航的Android视图组件</li>
+<li>NavigationTabBar 一个具有丰富的动画效果的Android导航Tab工具栏组件。</li>
+<li>ahbottomnavigation material风格的底部导航</li>
+<li>Material-BottomNavigation</li>
+<li>SmartTabLayout 自定义的viewpager标题栏，在滚动时向用户提供连续反馈</li>
+<li>material-menu 带动画的导航栏</li>
+</ul>
+</li>
+</ol>
+<h4 id="二、功能相关"><a href="#二、功能相关" class="headerlink" title="二、功能相关"></a>二、功能相关</h4><ol>
+<li><strong>图片选择</strong><ul>
+<li>MultiImageSelector 仿微信实现多图选择</li>
+<li>GalleryFinal 拍照、图片选择（单选/多选）、 裁剪（单/多裁剪）、旋转、ImageLoader无绑定任由开发者选择、功能可配置、主题样式可配置</li>
+<li>Matisse 图片选择</li>
+<li>{停止维护} ImagePicker 图片选择</li>
+<li>TakePhoto 拍照或从相册、文件中选择、裁剪图片、压缩图片的开源工具库</li>
+<li>PictureSelector 图片选择</li>
+<li>android-crop 图片裁剪</li>
+<li>ImageEditor-Android 图片编辑</li>
+<li>boxing 基于MVP模式的Android多媒体选择器</li>
+<li>cropper 图片裁剪</li>
+<li>uCrop Yalantis 出品的强大的图片裁剪库 ，支持缩放，旋转图片，支持各种比例的裁剪框</li>
+<li>android-crop 图片裁剪</li>
+<li>cropiwa 图片裁剪</li>
+<li>SmartCropper 智能图片裁剪框架。自动识别边框，手动调节选区，使用透视变换裁剪并矫正选区；适用于身份证，名片，文档等照片的裁剪。</li>
+<li>Android-Image-Cropper 图片裁剪</li>
+<li>android-gpuimage 图片滤镜框架</li>
+<li>Blurry 图片模糊</li>
+<li>Horizon 简单的Android视觉均衡器</li>
+<li>GestureViews 大图预览</li>
+</ul>
+</li>
+<li><strong>图片加载</strong><ul>
+<li>glide</li>
+<li>glide-transformations 基于glide 的图片变化库</li>
+<li>fresco</li>
+<li>picasso</li>
+<li>LargeImage 加载大图 可以高清显示10000*10000像素的图片，轻松实现微博长图功能</li>
+</ul>
+</li>
+<li><strong>音视频</strong><ul>
+<li>ExoPlayer 谷歌出品的视频播放器</li>
+<li>JiaoZiVideoPlayer 饺子视频播放器</li>
+<li>ijkplayer ijk 播放器</li>
+<li>GSYVideoPlayer</li>
+<li>VitamioBundle 多媒体播放器</li>
+<li>VideoPlayerManager 帮助实现VideoPlayer控制，使得它更容易使用ListView和recyclerview。</li>
+<li>PlayerBase 专注于播放视图组件的高复用性和组件间的低耦合，轻松处理复杂业务。</li>
+<li>DanmakuFlameMaster 弹幕</li>
+<li>AndroidVideoCache 视频缓存</li>
+<li>TicktockMusic 一款 material design 风格的音乐播放器，可以播放本地和网络音乐，并且提供歌词显示。</li>
+<li>Timber 一个完整的音乐播放器</li>
+<li>NiceVieoPlayer 支持列表，完美切换全屏、小窗口的Android视频播放器（2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>刷新控件</strong><ul>
+<li>SmartRefreshLayout Android智能下拉刷新框架</li>
+<li>android-Ultra-Pull-To-Refresh</li>
+<li>Android-PullToRefresh</li>
+<li>SpringView</li>
+<li>Phoenix</li>
+</ul>
+</li>
+<li><strong>动画</strong><ul>
+<li>Material-Animations</li>
+<li>Loop3DRotation-master 3D旋转动画</li>
+<li>lottie-android 加载ae做的动画</li>
+<li>AndroidViewAnimations 动画合集</li>
+<li>ParticleTextView 粒子动画</li>
+<li>ExpectAnim 一个漂亮的动画效果</li>
+<li>android-pathview 路径动画</li>
+<li>ViewAnimator 动画合集</li>
+<li>TextSurface 炫酷的文字展示动画</li>
+<li>CircularAnim 水波纹动画</li>
+<li>AndroidCarrouselLayout 3D旋转动画（2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>轮播图</strong><ul>
+<li>banner</li>
+<li>Android-ConvenientBanner</li>
+<li>MZBannerView 仿魅族BannerView,图片轮播控件,支持多种模式切换</li>
+</ul>
+</li>
+<li><strong>权限</strong><ul>
+<li>PermissionsDispatcher</li>
+<li>RxPermissions</li>
+<li>easypermissions</li>
+<li>Dexter</li>
+<li>AndPermission</li>
+<li>PermissionHelper</li>
+<li>PermissionGen</li>
+<li>HiPermission</li>
+<li>TedPermission</li>
+<li>permissions4m 国产手机5.0、6.0权限适配框架</li>
+</ul>
+</li>
+<li><strong>二维码</strong><ul>
+<li>zxing</li>
+<li>BGAQRCode-Android 扫描二维码、扫描条形码、</li>
+<li>QrCodeScan 二维码扫描</li>
+<li>android-zxingLibrary 几行代码快速集成二维码扫描功能</li>
+</ul>
+</li>
+<li><strong>新手引导</strong><ul>
+<li>NewbieGuide Android 快速实现新手引导层的库，通过简洁链式调用，一行代码实现引导层的显示</li>
+<li>GuideView 能够快速为任何一个View创建一个遮罩层，支持单个页面，多个引导提示，支持为高亮区域设置不同的图形，支持引导动画，方便扩展,良好支持fragment</li>
+</ul>
+</li>
+<li><strong>数据库</strong><ul>
+<li>greenDAO</li>
+<li>ActiveAndroid Android Sqlite orm 的 db 工具类</li>
+<li>realm-java 移动端的数据库，适用于 Phone、Tablet、Wearable，支持 ORM，线程安全、支持连表及数据库加密，比 SQLite 性能更好</li>
+<li>DBFlow Android SQLite ORM 工具库。综合了 Active Android, Schematic, Ollie,Sprinkles 等库的优点；通过注解实现，性能好；能生成 ContentProvider。</li>
+<li>SnappyDB key-value数据库，非常流行的NoSQL数据库</li>
+<li>LitePal 不编写SQL语句的情况下完成大多数数据库操作，包括创建或升级表、CRUD操作、聚合函数等</li>
+<li>objectbox-java ObjectBox是一个超高速的面向对象的数据库，具有很强的关系支持。ObjectBox嵌入到Android、Linux、MacOS或Windows应用程序中。</li>
+<li>wcdb 一个高效、完整、易用的移动数据库框架，基于(<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fsqlcipher%2Fsqlcipher)[SQLCipher]，支持iOS" target="_blank" rel="noopener">https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fsqlcipher%2Fsqlcipher)[SQLCipher]，支持iOS</a>, macOS和Android。</li>
+<li>Android-Debug-Database 数据库调试工具</li>
+</ul>
+</li>
+<li><strong>图表</strong><ul>
+<li>MPAndroidChart</li>
+<li>XCL-Charts</li>
+<li>hellocharts-android</li>
+<li>DashboardView 仪表盘</li>
+<li>FinancialCustomerView 金融类的自定义View</li>
+<li>WilliamChart 双向图表</li>
+<li>EazeGraph</li>
+<li>android-DecoView-charting</li>
+<li>GraphView 绘制图表和曲线图的 View，可用于 Android 上的曲形图、柱状图、波浪图展示</li>
+<li>PieChartView 饼状图</li>
+<li>SpeedView Android的动态车速表</li>
+<li>KalmanRx kalman 滤波（2019-03-29 新增）</li>
+<li>ikvStockChart K线图 （2019-03-29 新增）</li>
+</ul>
+</li>
+<li><strong>菜单</strong><ul>
+<li>BoomMenu 爆炸菜单效果</li>
+<li>Side-Menu.Android 侧滑菜单</li>
+<li>Context-Menu.Android 可以方便快速集成漂亮带有动画效果的上下文菜单，(<a href="https://links.jianshu.com/go?to=http%3A%2F%2Fyalantis.com%2F)[Yalantis]出品。" target="_blank" rel="noopener">https://links.jianshu.com/go?to=http%3A%2F%2Fyalantis.com%2F)[Yalantis]出品。</a></li>
+<li>FlowingDrawer 带手势的侧滑菜单</li>
+<li>SlidingMenu 侧滑菜单</li>
+<li>android-menudrawer 滑出式菜单，通过拖动屏幕边缘滑出菜单，支持屏幕上下左右划出，支持当前 View 处于上下层，支持 Windows 边缘、ListView 边缘、ViewPager 变化划出菜单等。</li>
+<li>AndroidResideMenu 仿 Dribbble 的边栏菜单</li>
+<li>MaterialDrawer Material Design 风格的导航抽屉，提供简便且强大的定制功能</li>
+<li>bottomsheet 底部菜单（2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>手势关闭</strong><ul>
+<li>SwipeBackLayout</li>
+<li>SwipeBackHelper</li>
+</ul>
+</li>
+<li><strong>事件处理</strong><ul>
+<li>otto</li>
+<li>EventBus</li>
+<li>AndroidEventBus</li>
+</ul>
+</li>
+<li><strong>换肤</strong><ul>
+<li>QSkinLoader</li>
+<li>Android-Skin-Loader 支持多种场景的Android换肤框架</li>
+<li>MultipleTheme 夜间模式的Android框架</li>
+<li>Colorful 基于Theme的Android动态换肤库，无需重启Activity、无需自定义View，方便的实现日间、夜间模式。</li>
+<li>MaterialDesignDemo</li>
+<li>Android-skin-support</li>
+</ul>
+</li>
+<li><strong>状态栏</strong><ul>
+<li>StatusBarUtil</li>
+<li>ImmersionBar</li>
+</ul>
+</li>
+<li><strong>颜色选择器</strong><ul>
+<li>HoloColorPicker</li>
+<li>android-ColorPickerPreference</li>
+</ul>
+</li>
+<li><strong>布局相关</strong><ul>
+<li>flexbox-layout 柔性布局</li>
+<li>overscroll-decor 仿IOS回弹效果</li>
+<li>ChipsLayoutManager TAG 布局</li>
+<li>vlayout VirtualLayout是一个针对RecyclerView的LayoutManager扩展, 主要提供一整套布局方案和布局间的组件复用的问题。</li>
+<li>ArcLayout 弧形布局</li>
+<li>FlowLayout Android流式布局，支持单选、多选等，适合用于产品标签等。</li>
+<li>MaterialDesignLibrary 包含android l组件的库，供您在低版本中使用。</li>
+<li>material 包含android l组件的库，供您在低版本中使用。</li>
+<li>QMUI_Android 快速搭建一个具备基本设计还原效果的 Android 项目</li>
+<li>Android-Bootstrap Android 上的bootstrap 效果</li>
+<li>ScalingLayout 缩放布局</li>
+<li>android-ConstraintLayoutExamples ConstraintLayout 布局的官方demo （2019-03-27 新增）</li>
+<li>ViewSpreadTranslationController 视图扩散切换控制器（2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>屏幕适配</strong><ul>
+<li>AndroidAutoSize 今日头条屏幕适配方案终极版</li>
+</ul>
+</li>
+<li><strong>其他</strong><ul>
+<li>AndroidPdfViewer pdf 加载</li>
+<li>android-job 用于后台运行延迟的作业<h4 id="三、网络相关"><a href="#三、网络相关" class="headerlink" title="三、网络相关"></a>三、网络相关</h4></li>
+</ul>
+</li>
+<li><strong>http</strong><ul>
+<li>retrofit</li>
+<li>okhttp</li>
+<li>okhttp-OkGo 封装了 OkHttp 的网络请求框架</li>
+<li>{停止维护} okhttputils okhttp的辅助类</li>
+<li>NoHttp 实现Http标准协议框架，支持多种缓存模式，底层可动态切换OkHttp、URLConnection。</li>
+<li>xUtils3 xUtils 包含了orm, http(s), image, view注解</li>
+<li>afinal Afinal是一个android的ioc，orm框架，内置了四大模块功能：FinalAcitivity,FinalBitmap,FinalDb,FinalHttp</li>
+<li>Fast-Android-Networking 支持http2的网络库（2019-03-29 新增）</li>
+</ul>
+</li>
+<li><strong>json</strong><ul>
+<li>gson</li>
+<li>fastjson</li>
+</ul>
+</li>
+<li><strong>下载、上传</strong><ul>
+<li>MultiThreadDownloader 多线程下载</li>
+<li>android-upload-service 文件上传</li>
+<li>Aria 下载</li>
+<li>FileDownloader 文件下载引擎，稳定、高效、灵活、简单易用</li>
+</ul>
+</li>
+<li><strong>rx</strong><ul>
+<li>RxAndroid 对RxJava在Android上的扩展，使得Android上也很容易实现reactive components，简化线程操作，从而写出很漂亮的代码。</li>
+<li>RxJava</li>
+<li>RxCache 专门为Retrifit打造的缓存库</li>
+<li>ReactiveNetwork 检测网络状态</li>
+<li>RxLifecycle 管理rx的生命周期</li>
+<li>AutoDispose rx 工具类<h4 id="四、自定义View"><a href="#四、自定义View" class="headerlink" title="四、自定义View"></a>四、自定义View</h4></li>
+</ul>
+</li>
+<li><strong>蛛网图</strong><ul>
+<li>SpiderPlotView</li>
+<li>RadarChartView</li>
+</ul>
+</li>
+<li><strong>翻书效果</strong><ul>
+<li>android-PageFlip</li>
+<li>android-flip 类似 Flipboard 翻转动画</li>
+</ul>
+</li>
+<li><strong>图案解锁</strong><ul>
+<li>PatternLockView</li>
+</ul>
+</li>
+<li><strong>望远镜效果（部分高亮）</strong><ul>
+<li>ShowcaseView</li>
+<li>Spotlight</li>
+</ul>
+</li>
+<li><strong>其他</strong><ul>
+<li>SeatTable 电影选座效果</li>
+<li>FlightSeat 飞机票选座效果</li>
+<li>GoodView 点赞效果</li>
+<li>Android-PullLayout 仿uc下拉效果</li>
+<li>AlphaIndicatorView 仿微信底部TAB 滑动效果</li>
+<li>RadarView 高仿360检测评分动画</li>
+<li>CardStackView 三种炫酷的列表卡片滑动动画</li>
+<li>TapTargetView 难于描述，还是自己看效果图吧</li>
+<li>CoordinatorTabLayout 可快速实现TabLayout与CoordinatorLayout相结合的样式</li>
+<li>ShimmerLayout 扫光效果</li>
+<li>PhotoMovie 仿抖音照片电影</li>
+<li>MyCardView 一个支持自定义阴影颜色的 CardView （2019-03-27 新增）<h4 id="五、其他"><a href="#五、其他" class="headerlink" title="五、其他"></a>五、其他</h4></li>
+</ul>
+</li>
+<li><strong>工具类</strong><ul>
+<li>AndroidUtilCode 强大易用的安卓工具类库</li>
+<li>RxTools Android开发人员不得不收集的工具类集合</li>
+<li>butterknife 利用 annotation 帮你快速完成 View 的初始化，减少代码</li>
+</ul>
+</li>
+<li><strong>热修复</strong><ul>
+<li>tinker 它支持dex、库和资源更新，无需重新安装apk</li>
+<li>Nuwa</li>
+<li>AndFix 阿里的方案</li>
+<li>VirtualXposed</li>
+</ul>
+</li>
+<li><strong>插件化</strong><ul>
+<li>RePlugin RePlugin是一套完整的、稳定的、适合全面使用的，占坑类插件化方案，由360手机卫士的RePlugin Team研发，也是业内首个提出”全面插件化“（全面特性、全面兼容、全面使用）的方案。（2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>签名打包</strong><ul>
+<li>walle Android Signature V2 Scheme签名下的新一代渠道包打包神器</li>
+<li>packer-ng-plugin 100个渠道包只需要10秒钟</li>
+</ul>
+</li>
+<li><strong>反编译</strong><ul>
+<li>Apktool 反编译工具</li>
+</ul>
+</li>
+<li><strong>依赖注入</strong><ul>
+<li>dagger 依赖注入，适用于 Android 和 Java</li>
+</ul>
+</li>
+<li><strong>日志</strong><ul>
+<li>logger</li>
+</ul>
+</li>
+<li><strong>路由</strong><ul>
+<li>ARouter 帮助 Android App 进行组件化改造的路由框架</li>
+</ul>
+</li>
+<li><strong>内存泄漏检测</strong><ul>
+<li>leakcanary</li>
+</ul>
+</li>
+<li><strong>布局优化</strong><ul>
+<li>X2C 在编译生成APK期间，将需要翻译的layout翻译生成对应的java文件，这样对于开发人员来说写布局还是写原来的xml，但对于程序来说，运行时加载的是对应的java文件。 （2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>画图</strong><ul>
+<li>JustWeTools</li>
+</ul>
+</li>
+<li><strong>图片压缩</strong><ul>
+<li>Luban Android图片压缩工具</li>
+<li>Compressor</li>
+<li>AiYaCompressHelper</li>
+</ul>
+</li>
+<li><strong>摄像头</strong><ul>
+<li>cameraview 轻松集成camera</li>
+<li>camerakit-android</li>
+</ul>
+</li>
+<li><strong>富文本编辑器</strong><ul>
+<li>richeditor-android</li>
+<li>Android-Rich-text-Editor （2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>指示器</strong><ul>
+<li>MagicIndicator 强大、可定制、易扩展的 ViewPager 指示器框架。</li>
+<li>dotsindicator 视图页导航点指示器（2019-03-27 新增）</li>
+</ul>
+</li>
+<li><strong>自定义字体加载</strong><ul>
+<li>Calligraphy</li>
+</ul>
+</li>
+<li><strong>文件加密</strong><ul>
+<li>conceal</li>
+</ul>
+</li>
+<li><strong>表情包</strong><ul>
+<li>XhsEmoticonsKeyboard</li>
+</ul>
+</li>
+<li><strong>相机滤镜</strong><ul>
+<li>android-gpuimage-plus</li>
+</ul>
+</li>
+<li><strong>车牌识别</strong><ul>
+<li>EasyPR4Android</li>
+</ul>
+</li>
+<li><strong>键盘冲突</strong><ul>
+<li>JKeyboardPanelSwitch</li>
+</ul>
+</li>
+<li><strong>蓝牙</strong><ul>
+<li>Android-BLE AndroidBLE蓝牙框架，包括扫描、连接、设置通知、发送数据、读取、接收数据和OTA升级以及各种直观的回调，近乎一行代码植入项目，可扩展配置蓝牙相关操作。</li>
+</ul>
+</li>
+<li><strong>测试</strong><ul>
+<li>Matrix 通过各种性能监控方案，对性能监控项的异常数据进行采集和分析，输出相应的问题分析、定位与优化建议，从而帮助开发者开发出更高质量的应用。</li>
+<li>pandora 一款无需ROOT、可以直接在应用内查看和修改包括网络、数据库、UI等的工具箱，适合开发和测试阶段的各种问题的快速定位。</li>
+<li>ArgusAPM 。ArgusAPM是360移动端产品使用的可视化性能监控平台，为移动端APP提供性能监控与管理，可以迅速发现和定位各类APP性能和使用问题，帮助APP不断的提升用户体验。（2019-03-27 新增）</li>
+<li>AndroidPerformanceMonitor 非侵入式的性能监控组件</li>
+<li>UETool 一个各方人员（设计师、程序员、测试）都可以使用的调试工具。它可以作用于任何显示在屏幕上的 view，比如 Activity/Fragment/Dialog/PopupWindow 等等。</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Kyne</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Thinking is the proof of one's life.</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();" target="_blank" rel="noopener">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/11/19/%E9%98%BF%E9%87%8CAndroid%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C/">阿里Android开发手册</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Kyne | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
