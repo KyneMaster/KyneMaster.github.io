@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kyne">
+
+
+
+
+
+<title>Android开发遇到的异常整理 | KyneZone</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kyne&#39;s Zone</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kyne&#39;s Zone</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Android开发遇到的异常整理</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Kyne</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 26, 2019&nbsp;&nbsp;11:32:07</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录在开发过程中遇到的不好找到问题的崩溃异常。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p><img src="/2019/12/26/Android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E5%BC%82%E5%B8%B8%E6%95%B4%E7%90%86/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.jpg" alt="目录结构"></p>
+<h3 id="IllegalArgumentException"><a href="#IllegalArgumentException" class="headerlink" title="IllegalArgumentException"></a>IllegalArgumentException</h3><blockquote>
+<p>java.lang.IllegalArgumentException: <strong>You cannot start a load for a destroyed activity</strong><br>   at com.bumptech.glide.manager.RequestManagerRetriever.assertNotDestroyed(RequestManagerRetriever.java:134)<br>   at com.bumptech.glide.manager.RequestManagerRetriever.get(RequestManagerRetriever.java:102)<br>   at com.bumptech.glide.Glide.with(Glide.java:653)</p>
+</blockquote>
+<h5 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h5><pre><code>当你的Activity重新创建并且Glide中的context是旧的时候，最容易出现。
+换言之，context已经不在，但是异步处理刚回调到主线程更新UI，便会报异常</code></pre><h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><pre><code>问题发生在当前组件的上下文对象(Context)已经不存在，即围绕context做处理</code></pre><ul>
+<li><strong>方案一</strong><br>  使用控件的context，比如adapter中   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewholder.imag.getContext()</span><br></pre></td></tr></table></figure></li>
+<li><strong>方案二</strong><br>  <strong>getApplicationContext()</strong> 替代，<br>  然后在<strong>onDestroy()</strong> 中取消异步请求，避免多余的资源消耗  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(getApplicationContext()).pauseRequests();</span><br></pre></td></tr></table></figure></li>
+<li><strong>方案三</strong><br>  加载前做判断    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (ContextUtils.isActivityRunning(xxActivity.this)) &#123;&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> /**</span><br><span class="line"> * 判断正在运行的Activity</span><br><span class="line"> * @param context</span><br><span class="line"> * @return  boolean</span><br><span class="line"> */</span><br><span class="line">public static boolean isActivityRunning(Context context) &#123;</span><br><span class="line">    if (context == null) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    if (context instanceof Activity) &#123;</span><br><span class="line">        return !((Activity) context).isFinishing();</span><br><span class="line">    &#125; else if (context instanceof ContextThemeWrapper) &#123;</span><br><span class="line">        Context baseContext = ((ContextThemeWrapper) context).getBaseContext();</span><br><span class="line">        if (baseContext != null) &#123;</span><br><span class="line">            if (baseContext instanceof Activity) &#123;</span><br><span class="line">                return !((Activity) baseContext).isFinishing();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<h3 id="IllegalStateException"><a href="#IllegalStateException" class="headerlink" title="IllegalStateException"></a>IllegalStateException</h3><blockquote>
+<p>java.lang.IllegalStateException: <strong>Can not perform this action after onSaveInstanceState</strong><br>    at android.support.v4.app.FragmentManagerImpl.checkStateLoss(FragmentManager.java:2080)<br>    at android.support.v4.app.FragmentManagerImpl.enqueueAction(FragmentManager.java:2106)<br>    at android.support.v4.app.BackStackRecord.commitInternal(BackStackRecord.java:683)<br>    at android.support.v4.app.BackStackRecord.commit(BackStackRecord.java:637)<br>    …</p>
+</blockquote>
+<h5 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a>场景</h5><pre><code>该异常发生FragmentManager的commit方法是在Activity的onSaveInstanceState()之后调用时发生。（在commit之前进行了异步请求）
+原因是onSaveInstanceState()是在onDestroy()前调用来保存数据的，之后便不能再commit，故出错。</code></pre><h5 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h5><pre><code>commit()替换为commitAllowingStateLoss()</code></pre><hr>
+<h3 id="IndexOutOfBoundsException（Inconsistency-detected）"><a href="#IndexOutOfBoundsException（Inconsistency-detected）" class="headerlink" title="IndexOutOfBoundsException（Inconsistency detected）"></a>IndexOutOfBoundsException（Inconsistency detected）</h3><blockquote>
+<p>java.lang.IndexOutOfBoundsException: <strong>Inconsistency detected</strong>. Invalid view holder adapter positionViewHolder{2064e5c6 position=2 id=-1, oldPos=2, pLpos:-1 scrap [attachedScrap] tmpDetached no parent}<br>at android.support.v7.widget.RecyclerView Recycler.validateViewHolderForOffsetPosition(RecyclerView.java:4505)<br>at android.support.v7.widget.RecyclerView Recycler.getViewForPosition(RecyclerView.java:4636)<br>at android.support.v7.widget.RecyclerView Recycler.getViewForPosition(RecyclerView.java:4617)<br>at android.support.v7.widget.LinearLayoutManager$LayoutState.next(LinearLayoutManager.java:1994)<br>at android.support.v7.widget.LinearLayoutManager.layoutChunk(LinearLayoutManager.java:1390)<br>at android.support.v7.widget.LinearLayoutManager.fill(LinearLayoutManager.java:1353)<br>at android.support.v7.widget.LinearLayoutManager.onLayoutChildren(LinearLayoutManager.java:574)<br>at android.support.v7.widget.RecyclerView.dispatchLayoutStep1(RecyclerView.java:2979)<br>…</p>
+</blockquote>
+<h5 id="场景-2"><a href="#场景-2" class="headerlink" title="场景"></a>场景</h5><pre><code>该问题算是RecyclerView的错误。对adapter传入前的List先移除一条数据，然后又添加数据，之后再notify，就会报错。notify前，adapter内部的数据还是list移除数据前的List，内外数据不一致导致。
+即adapter内外数据不一致，从而报错。</code></pre><h5 id="解决-2"><a href="#解决-2" class="headerlink" title="解决"></a>解决</h5><ul>
+<li><strong>方案一</strong><br>  自己写一个继承LinearLayoutManager的包装类，在onLayoutChildren()方法里try-catch捕获该异常。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        super.onLayoutChildren(recycler, state);</span><br><span class="line">    &#125; catch (IndexOutOfBoundsException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>方案二</strong><br>  在进行数据移除和数据增加时，务必要保证RecyclerView的Adapter中的数据集和移除／添加等操作后的数据集保持一致！<br>  notifyItemRangeRemoved()<br>  notifyItemRangeInserted()<br>  notifyItemRangeChanged()<br>  使用这些方法之前先处理List数据,保证数据一致<blockquote>
+<p>每一次对外部数据集做改动时，都需要紧接着主动对外部数据集和内部数据集做一次同步操作</p>
+</blockquote>
+</li>
+<li><strong>方案三</strong><br>下滑的同时到adapter更新数据完毕，让RecyclerView暂时禁止滑动。</li>
+</ul>
+<p><strong>PS:</strong></p>
+<blockquote>
+<p>不要在列表滑动的时候去更新你的数据源</p>
+</blockquote>
+<h3 id="IllegalArgumentException-1"><a href="#IllegalArgumentException-1" class="headerlink" title="IllegalArgumentException"></a>IllegalArgumentException</h3><blockquote>
+<p>java.lang.IllegalArgumentException: <strong>pointerIndex out of range pointerIndex=-1 pointerCount=1</strong><br>    at android.view.MotionEvent.nativeGetAxisValue(MotionEvent.java)<br>    at android.view.MotionEvent.getX(MotionEvent.java:2216)<br>    at android.support.v4.view.ViewPager.onInterceptTouchEvent(ViewPager.java:2072)<br>    at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2582)<br>    at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3041)<br>    ….</p>
+</blockquote>
+<h5 id="场景-3"><a href="#场景-3" class="headerlink" title="场景"></a>场景</h5><pre><code>原因不详，ViewPager手势缩放/翻页时的错误。</code></pre><h5 id="解决-3"><a href="#解决-3" class="headerlink" title="解决"></a>解决</h5><ul>
+<li>简单有效的方法，try-catch异常发生的地方。即继承ViewPager重写<strong>onTouchEvent()</strong> 和<strong>onInterceptTouchEvent()</strong> 两个方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class ViewPagerFixed extends android.support.v4.view.ViewPager &#123;</span><br><span class="line"> </span><br><span class="line">    public ViewPagerFixed(Context context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public ViewPagerFixed(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        super(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public boolean onTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return super.onTouchEvent(ev);</span><br><span class="line">        &#125; catch (IllegalArgumentException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return super.onInterceptTouchEvent(ev);</span><br><span class="line">        &#125; catch (IllegalArgumentException ex) &#123;</span><br><span class="line">            ex.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Kyne</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Thinking is the proof of one's life.</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();" target="_blank" rel="noopener">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/12/24/Service%E6%95%B4%E7%90%86/">Service整理</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Kyne | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
