@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kyne">
+
+
+
+
+
+<title>SharedPreferences模块封装 | KyneZone</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kyne&#39;s Zone</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kyne&#39;s Zone</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">SharedPreferences模块封装</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Kyne</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 10, 2020&nbsp;&nbsp;18:33:59</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>SharedPreferences 轻量级缓存使用众所周知。但是使用极其繁琐，那么现在来封装优化一下。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p><img src="/2020/03/10/SharedPreferences%E6%A8%A1%E5%9D%97%E5%B0%81%E8%A3%85/%E7%9B%AE%E5%BD%95.jpg" alt="目录结构"></p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>SharedPreferences是以XML&lt;-&gt;Map键值对的形式保存在/data/data/包名/shared_prefs文件夹下。<br>注意：</p>
+<ul>
+<li>app首次使用 SP 的时候会从磁盘读取，之后缓存在内存中。</li>
+<li>区别于其他缓存，他是每次都是重新写入，之前的xml文件会被改为备份文件，如果操作成功，备份文件就会删除。</li>
+</ul>
+<p>进一步了解自行查看源码。</p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SharedPreferences sharedPreferences= getSharedPreferences(&quot;user&quot;,Context.MODE_PRIVATE);</span><br><span class="line">SharedPreferences.Editor editor = sharedPreferences.edit();</span><br><span class="line">editor.putString(&quot;username&quot;, username);             </span><br><span class="line">editor.commit();</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><ul>
+<li>edit 获取不爽，太麻烦</li>
+<li>每次获取SharedPreferences实例还需要传入name，那我要是忘了呢？</li>
+<li>put时要传入key值，这要是团队协作，使用到缓存的信息，还要去查看他的key值，不科学，要是数据多了岂不更麻烦</li>
+<li>每次都要commit，就不能给他封装了嘛～～</li>
+</ul>
+<p>一看就不是自己人，用它给我干活不放心啊，给他包装下～</p>
+<h3 id="思路与实现"><a href="#思路与实现" class="headerlink" title="思路与实现"></a>思路与实现</h3><ol>
+<li><p><strong>SharedPreferences</strong><br>先看下SharedPreferences， 他本身就是interface，一看就是采用的面向接口编程，好像在告诉我，我是干这个的，你别管我咋干的，你需要用就是了～</p>
+</li>
+<li><p><strong>定义执行部分</strong></p>
+</li>
+</ol>
+<ul>
+<li>自己定义方法，创建SharedPreferences实例，实现执行，先把edit的获取包起来， 那就创建个类，通过构造函数给他实例化  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class BasePreference &#123;</span><br><span class="line">    private SharedPreferences sharedPreferences;</span><br><span class="line">    private SharedPreferences.Editor editor;</span><br><span class="line"></span><br><span class="line">    public BasePreference(Context context, String name) &#123;</span><br><span class="line">        sharedPreferences = context.getSharedPreferences(name, Activity.MODE_PRIVATE);</span><br><span class="line">        editor = sharedPreferences.edit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>这样获取到了edit，使用他还要实现SharedPreferences的方法，那我就自己定义个～  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public interface ISharePreferences &#123;</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor putString(String key, String value);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor putStringSet(String key, Set&lt;String&gt; values);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor putInt(String key, int value);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor putLong(String key, long value);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor putFloat(String key, float value);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor putBoolean(String key, boolean value);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor remove(String key);</span><br><span class="line"></span><br><span class="line">    SharedPreferences.Editor clear();</span><br><span class="line"></span><br><span class="line">    boolean commit();</span><br><span class="line"></span><br><span class="line">    void apply();</span><br><span class="line"></span><br><span class="line">    String getString(String key, String defValue);</span><br><span class="line">    ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>这是使用的基本方法，给BasePreference实现  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class BasePreference implements ISharePreferences &#123;</span><br><span class="line">    private SharedPreferences sharedPreferences;</span><br><span class="line">    private SharedPreferences.Editor editor;</span><br><span class="line"></span><br><span class="line">    public BasePreference(Context context, String name) &#123;</span><br><span class="line">        sharedPreferences = context.getSharedPreferences(name, Activity.MODE_PRIVATE);</span><br><span class="line">        editor = sharedPreferences.edit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public SharedPreferences.Editor putString(String key, String value) &#123;</span><br><span class="line">        return editor.putString(key, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getString(String key, String defValue) &#123;</span><br><span class="line">        return sharedPreferences.getString(key, defValue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public SharedPreferences.Editor clear() &#123;</span><br><span class="line">        return editor.clear();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean commit() &#123;</span><br><span class="line">        return editor.commit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>好像可以了</li>
+</ul>
+<ol start="3">
+<li><strong>理想使用效果</strong></li>
+</ol>
+<ul>
+<li>首先是缓存分模块，比如用户信息缓存、设置配置缓存等等  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class UserPreferences &#123;</span><br><span class="line"></span><br><span class="line">    private static final String TAG =&quot;UserPreferences&quot;;</span><br><span class="line"></span><br><span class="line">    public UserPreferences(Context context) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li>然后使用不能太费劲，直接看类名就知道干啥的才行,定义功能接口  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public interface IUserPreferences &#123;</span><br><span class="line"></span><br><span class="line">    String getUserName();</span><br><span class="line"></span><br><span class="line">    void saveUserName(String value);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>实现功能  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class UserPreferences implements IUserPreferences &#123;</span><br><span class="line">    ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>怎么用Base类好呢？</li>
+</ul>
+<ol start="4">
+<li><strong>业务功能和公用功能分离</strong></li>
+</ol>
+<ul>
+<li>正常使用执行类，还需要引入ISharePreferences接口对象，实现包装父类。  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public interface IPreference &#123;</span><br><span class="line"></span><br><span class="line">    ISharePreferences getPreferences();</span><br><span class="line"></span><br><span class="line">    void commit();</span><br><span class="line"></span><br><span class="line">    void clear();</span><br><span class="line"></span><br><span class="line">    void remove(String key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class DefaultPreference implements IPreference &#123;</span><br><span class="line"></span><br><span class="line">    private ISharePreferences sharePreferences;</span><br><span class="line"></span><br><span class="line">    public DefaultPreference(Context context， String name)&#123;</span><br><span class="line">        sharePreferences = new BasePreference(context, name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public ISharePreferences getPreferences() &#123;</span><br><span class="line">        return sharePreferences;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void commit() &#123;</span><br><span class="line">        getPreferences().commit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void clear() &#123;</span><br><span class="line">        getPreferences().clear().commit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这样公用功能和ISharePreferences对象在父类实现，还差一点，name还要传入构造函数，下面来去掉，模块类名作为name自动传入<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class DefaultPreference implements IPreference &#123;</span><br><span class="line"></span><br><span class="line">    private String TAG = &quot;DefaultPreference&quot;;</span><br><span class="line">    private ISharePreferences sharePreferences;</span><br><span class="line"></span><br><span class="line">    public DefaultPreference(Context context)&#123;</span><br><span class="line">        sharePreferences = new BasePreference(context, getPreferenceName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getPreferenceName() &#123;</span><br><span class="line">        return TAG;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>这样继承父类后，覆盖该方法即可，如果是多人协同使用，既能看懂，又能约束</li>
+</ul>
+<ol start="5">
+<li><strong>执行和使用结合</strong></li>
+</ol>
+<ul>
+<li>继承DefaultPreference, 同时调整Key的规范  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class UserPreferences extends DefaultPreference implements IUserPreferences &#123;</span><br><span class="line"></span><br><span class="line">    private static final String TAG =&quot;UserPreferences&quot;;</span><br><span class="line"></span><br><span class="line">    public UserPreferences(Context context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getPreferenceName() &#123;</span><br><span class="line">        return TAG;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getUserName() &#123;</span><br><span class="line">        return getPreferences().getString(IUserConstant.USER_NAME,null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void saveUserPassword(String value) &#123;</span><br><span class="line">        getPreferences().putString(IUserConstant.USER_NAME,value).commit();</span><br><span class="line">    &#125;</span><br><span class="line">    ···</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="6">
+<li><strong>缓存管理类</strong><br>大功告成？还差一步！通过管理类实现缓存类的管理，并在app启动时单例实例化，防止频繁获取缓存对象，导致内容问题。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class PreferenceManager extends BasePreferenceManager &#123;</span><br><span class="line"></span><br><span class="line">    private static volatile PreferenceManager instance;</span><br><span class="line">    private IUserPreferences userPreferences;</span><br><span class="line"></span><br><span class="line">    public static PreferenceManager getInstance() &#123;</span><br><span class="line">        if (instance == null) &#123;</span><br><span class="line">            synchronized (PreferenceManager.class) &#123;</span><br><span class="line">                if (instance == null) &#123;</span><br><span class="line">                    instance = new PreferenceManager();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public IUserPreferences getUserPreferences() &#123;</span><br><span class="line">        return userPreferences;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void setUserPreferences(IUserPreferences userPreferences) &#123;</span><br><span class="line">        this.userPreferences = userPreferences;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void initPreferences(Context context) &#123;</span><br><span class="line">        PreferenceManager.getInstance().setUserPreferences(new UserPreferences(context));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用效果"><a href="#使用效果" class="headerlink" title="使用效果"></a>使用效果</h3></li>
+<li><strong>在Application类中初始化</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PreferenceManager.getInstance().initPreferences(this);</span><br></pre></td></tr></table></figure></li>
+<li><strong>正常使用</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IUserPreferences userPreferences = PreferenceManager.getInstance().getUserPreferences();</span><br><span class="line">//保存</span><br><span class="line">userPreferences.saveUserName(&quot;Kyne&quot;);</span><br><span class="line">//获取</span><br><span class="line">String name = userPreferences.getUserName();</span><br></pre></td></tr></table></figure>
+ <strong>舒坦～～</strong></li>
+</ol>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p>忘了咋画了 O——O～！</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Kyne</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Thinking is the proof of one's life.</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();" target="_blank" rel="noopener">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/02/ViewPager%E5%8D%A1%E7%89%87%E7%BC%A9%E6%94%BE/">ViewPager卡片缩放</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Kyne | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
