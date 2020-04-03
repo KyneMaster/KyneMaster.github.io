@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kyne">
+
+
+
+
+
+<title>Android零散记录 | KyneZone</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kyne&#39;s Zone</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kyne&#39;s Zone</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Android零散记录</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Kyne</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 3, 2020&nbsp;&nbsp;9:29:17</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h3 id="1-方法数超过65K，合并"><a href="#1-方法数超过65K，合并" class="headerlink" title="1. 方法数超过65K，合并"></a>1. 方法数超过65K，合并</h3><ul>
+<li>a.引入jar包<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;com.android.support:multidex:1.0.3&quot;</span><br></pre></td></tr></table></figure></li>
+<li>b.配置合并dex为开启<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig &#123;</span><br><span class="line">    multiDexEnabled true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>c.在自己的MyApplication下的方法中初始化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void attachBaseContext(Context base) &#123;</span><br><span class="line">    super.attachBaseContext(base);</span><br><span class="line">    MultiDex.install(this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-RecyclerView滚动监听"><a href="#2-RecyclerView滚动监听" class="headerlink" title="2. RecyclerView滚动监听"></a>2. RecyclerView滚动监听</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//RecyclerView滚动监听</span><br><span class="line">       recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) &#123;</span><br><span class="line">               super.onScrollStateChanged(recyclerView, newState);</span><br><span class="line">               switch (newState)&#123;</span><br><span class="line">                   case RecyclerView.SCROLL_STATE_IDLE://现在不是滚动状态</span><br><span class="line">                       L.e(&quot;滚动的距离==&quot;+direction);</span><br><span class="line">                       break;</span><br><span class="line">                   case RecyclerView.SCROLL_STATE_DRAGGING://手指 拖动</span><br><span class="line">                       break;</span><br><span class="line">                   case RecyclerView.SCROLL_STATE_SETTLING://惯性滚动</span><br><span class="line">                       break;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           @Override</span><br><span class="line">           public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) &#123;</span><br><span class="line">               super.onScrolled(recyclerView, dx, dy);</span><br><span class="line">               //计算RecyclerView滚动的距离</span><br><span class="line">               direction += dy;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-TextView"><a href="#3-TextView" class="headerlink" title="3. TextView"></a>3. TextView</h3><ul>
+<li>增加下划线<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);</span><br></pre></td></tr></table></figure></li>
+<li>代码添加左侧图片<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Drawable img = layout.getResources().getDrawable(R.drawable.icon);  </span><br><span class="line">// 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示  </span><br><span class="line">img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());  </span><br><span class="line">textView.setCompoundDrawables(img, null, null, null); //设置左图标</span><br></pre></td></tr></table></figure></li>
+<li>文字滚动消息<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt; TextView</span><br><span class="line">       android:layout_width =&quot;wrap_content&quot;</span><br><span class="line">       android:layout_height =&quot;wrap_content&quot;</span><br><span class="line">       android:focusable =&quot;true&quot;</span><br><span class="line">       android:focusableInTouchMode =&quot;true&quot;</span><br><span class="line">       android:marqueeRepeatLimit =&quot;marquee_forever&quot;</span><br><span class="line">       android:ellipsize =&quot;marquee&quot;</span><br><span class="line">       android:singleLine =&quot;true&quot;</span><br><span class="line">       android:text =&quot;那么什么是成功的人生，什么样的人又是成功人士呢？像科技界的比尔？盖茨 ，乔布斯 ，商界的巴菲特以及娱乐、体育界的大腕，无疑会被人们视为是成功者。但对于普通民众，如果用比尔？盖茨那样的标准来衡量是否成功似乎有些太苛刻，也不现实。在某种观念中，一个人的成功似乎与财富分不开的。很多国人到美国看到华人最常说的一句话是，你是个成功人士。为什么这么说？因为你能住300平方米、价值百万美元的房子，因为你开的车是奔驰 、宝马等豪华车，因为你有好的工作，年薪至少在10万美元以上。这也许是很多国人看待一个人成功与否的主要标志。但在美国人眼里，成功并不是与拥有众多财富密不可分。在1980年代，多数美国人把拥有更多财富看成人生成功的一个主要标志。而在一项最新的调查中，对于美国人来说，财富不再是成功的最重要组成部分。调查中22个成功人生的潜在组成因素中，“有很多钱”仅排名在第20位。&quot; /&gt;</span><br></pre></td></tr></table></figure></li>
+<li>可滚动方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// xml中设置TextView属性</span><br><span class="line">android:scrollbars=&quot;vertical&quot;</span><br><span class="line"></span><br><span class="line">// 同时代码中设置</span><br><span class="line">textView.setMovementMethod(ScrollingMovementMethod.getInstance());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="4-EditText变搜索按钮，并监听搜索事件"><a href="#4-EditText变搜索按钮，并监听搜索事件" class="headerlink" title="4. EditText变搜索按钮，并监听搜索事件"></a>4. EditText变搜索按钮，并监听搜索事件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//xml中设置android:imeOptions=&quot;actionSearch&quot;且android:singleLine=&quot;true&quot;</span><br><span class="line"></span><br><span class="line">etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) &#123;</span><br><span class="line">                if (actionId == EditorInfo.IME_ACTION_SEARCH)&#123;</span><br><span class="line">                    String keyWord = v.getText().toString();</span><br><span class="line">                    if (TextUtils.isEmpty(keyWord))&#123;</span><br><span class="line">                        ToastUtil.showLong(&quot;请输入搜索内容！&quot;);</span><br><span class="line">                        return false;</span><br><span class="line">                    &#125;</span><br><span class="line">                    //开始搜索keyWord相关内容</span><br><span class="line">                &#125;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="5-通过Glide保存图片到本地，并同步到相册"><a href="#5-通过Glide保存图片到本地，并同步到相册" class="headerlink" title="5. 通过Glide保存图片到本地，并同步到相册"></a>5. 通过Glide保存图片到本地，并同步到相册</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">save.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void onClick(View v) &#123;</span><br><span class="line">                    Glide.with(itemActivity.this)</span><br><span class="line">                            .asBitmap()</span><br><span class="line">                            .load(url)</span><br><span class="line">                            .into(new SimpleTarget&lt;Bitmap&gt;() &#123;</span><br><span class="line">                                @Override</span><br><span class="line">                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition&lt;? super Bitmap&gt; transition) &#123;</span><br><span class="line">                                    saveImage(resource);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;);</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">private void saveImage(Bitmap image) &#123;</span><br><span class="line">        String saveImagePath = null;</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        String imageFileName = &quot;JPEG_&quot; + &quot;down&quot; + random.nextInt(10) + &quot;.jpg&quot;;</span><br><span class="line">        File storageDir = new File(Environment.getExternalStoragePublicDirectory</span><br><span class="line">                (Environment.DIRECTORY_PICTURES) + &quot;test&quot;);</span><br><span class="line"></span><br><span class="line">        boolean success = true;</span><br><span class="line">        if(!storageDir.exists())&#123;</span><br><span class="line">            success = storageDir.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line">        if(success)&#123;</span><br><span class="line">            File imageFile = new File(storageDir, imageFileName);</span><br><span class="line">            saveImagePath = imageFile.getAbsolutePath();</span><br><span class="line">            try &#123;</span><br><span class="line">                OutputStream fout = new FileOutputStream(imageFile);</span><br><span class="line">                image.compress(Bitmap.CompressFormat.JPEG, 100, fout);</span><br><span class="line">                fout.close();</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // Add the image to the system gallery</span><br><span class="line">            galleryAddPic(saveImagePath);</span><br><span class="line">            Toast.makeText(mContext, &quot;IMAGE SAVED&quot;, Toast.LENGTH_LONG).show();</span><br><span class="line">        &#125;</span><br><span class="line">//        return saveImagePath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void galleryAddPic(String imagePath) &#123;</span><br><span class="line">        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);</span><br><span class="line">        File f = new File(imagePath);</span><br><span class="line">        Uri contentUri = Uri.fromFile(f);</span><br><span class="line">        mediaScanIntent.setData(contentUri);</span><br><span class="line">        sendBroadcast(mediaScanIntent);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-调用系统分享-不使用第三方-，指定QQ、微信等"><a href="#6-调用系统分享-不使用第三方-，指定QQ、微信等" class="headerlink" title="6. 调用系统分享(不使用第三方)，指定QQ、微信等"></a>6. 调用系统分享(不使用第三方)，指定QQ、微信等</h3><p><a href="https://blog.csdn.net/u010356768/article/details/78246691" target="_blank" rel="noopener">https://blog.csdn.net/u010356768/article/details/78246691</a><br>qq空间限制：<br><a href="https://blog.csdn.net/weixin_41239127/article/details/78743421" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41239127/article/details/78743421</a></p>
+<h3 id="7-Retrofit上传图片"><a href="#7-Retrofit上传图片" class="headerlink" title="7. Retrofit上传图片"></a>7. Retrofit上传图片</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> MultipartBody.Builder builder = new MultipartBody.Builder();</span><br><span class="line">builder.setType(MultipartBody.FORM);</span><br><span class="line">File file = new File(photoPath);</span><br><span class="line">builder.addFormDataPart(&quot;files&quot;, file.getName(), RequestBody.create(MediaType.parse(&quot;image/*&quot;), file));</span><br><span class="line">MultipartBody body = builder.build();</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-自定义View实践十六式"><a href="#8-自定义View实践十六式" class="headerlink" title="8. 自定义View实践十六式"></a>8. 自定义View实践十六式</h3><p><a href="https://me.csdn.net/u011387817" target="_blank" rel="noopener">https://me.csdn.net/u011387817</a></p>
+<h3 id="9-再次点击退出程序"><a href="#9-再次点击退出程序" class="headerlink" title="9. 再次点击退出程序"></a>9. 再次点击退出程序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void onBackPressed() &#123;</span><br><span class="line">        if (!mBackKeyPressed) &#123;</span><br><span class="line">            Toast.makeText(this, &quot;再按一次退出&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">            mBackKeyPressed = true;</span><br><span class="line">            new Timer().schedule(new TimerTask() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void run() &#123;</span><br><span class="line">                    mBackKeyPressed = false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, 2000);</span><br><span class="line">        &#125; else &#123;//退出程序</span><br><span class="line">            finish();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-关于android中的armeabi、armeabi-v7a、arm64-v8a及x86等"><a href="#10-关于android中的armeabi、armeabi-v7a、arm64-v8a及x86等" class="headerlink" title="10. 关于android中的armeabi、armeabi-v7a、arm64-v8a及x86等"></a>10. 关于android中的armeabi、armeabi-v7a、arm64-v8a及x86等</h3><p>如果项目只包含了 armeabi，那么在所有Android设备都可以运行；<br>如果项目只包含了 armeabi-v7a，除armeabi架构的设备外都可以运行；</p>
+<p>如果项目只包含了 x86，那么armeabi架构和armeabi-v7a的Android设备是无法运行的； 如果同时包含了 armeabi， armeabi-v7a和x86，所有设备都可以运行，程序在运行的时候去加载不同平台对应的so，这是较为完美的一种解决方案，同时也会导致包变大。<br><a href="https://www.jianshu.com/p/f29ad4beef59" target="_blank" rel="noopener">https://www.jianshu.com/p/f29ad4beef59</a></p>
+<h3 id="11-背景高斯模糊"><a href="#11-背景高斯模糊" class="headerlink" title="11. 背景高斯模糊"></a>11. 背景高斯模糊</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">private Bitmap applyBlur() &#123;</span><br><span class="line">       Bitmap bitmap = ScreenUtils.snapShotWithStatusBar(this.getActivity());</span><br><span class="line">       return blur(bitmap);</span><br><span class="line">   &#125;</span><br><span class="line">   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)</span><br><span class="line">   private Bitmap blur(Bitmap bkg) &#123;</span><br><span class="line">       long startMs = System.currentTimeMillis();</span><br><span class="line">       float radius = 1;</span><br><span class="line">       bkg = small(bkg);</span><br><span class="line">       Bitmap bitmap = bkg.copy(bkg.getConfig(), true);</span><br><span class="line"></span><br><span class="line">       final RenderScript rs = RenderScript.create(this.getContext());</span><br><span class="line">       final Allocation input = Allocation.createFromBitmap(rs, bkg, Allocation.MipmapControl.MIPMAP_NONE,</span><br><span class="line">               Allocation.USAGE_SCRIPT);</span><br><span class="line">       final Allocation output = Allocation.createTyped(rs, input.getType());</span><br><span class="line">       final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));</span><br><span class="line">       script.setRadius(radius);</span><br><span class="line">       script.setInput(input);</span><br><span class="line">       script.forEach(output);</span><br><span class="line">       output.copyTo(bitmap);</span><br><span class="line"></span><br><span class="line">       bitmap = big(bitmap);</span><br><span class="line">       MainActivity.ivCover.setBackground(new BitmapDrawable(getResources(), bitmap));</span><br><span class="line">       rs.destroy();</span><br><span class="line">       Log.d(&quot;zhangle&quot;,&quot;blur take away:&quot; + (System.currentTimeMillis() - startMs )+ &quot;ms&quot;);</span><br><span class="line">       return bitmap;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   private static Bitmap big(Bitmap bitmap) &#123;</span><br><span class="line">       Matrix matrix = new Matrix();</span><br><span class="line">       matrix.postScale(4f,4f); //长和宽放大缩小的比例</span><br><span class="line">       Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);</span><br><span class="line">       return resizeBmp;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   private static Bitmap small(Bitmap bitmap) &#123;</span><br><span class="line">       Matrix matrix = new Matrix();</span><br><span class="line">       matrix.postScale(0.25f,0.25f); //长和宽放大缩小的比例</span><br><span class="line">       Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);</span><br><span class="line">       return resizeBmp;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="12-Android-TextView加上阴影效果"><a href="#12-Android-TextView加上阴影效果" class="headerlink" title="12. Android TextView加上阴影效果"></a>12. Android TextView加上阴影效果</h3><p><a href="https://blog.csdn.net/hewence1/article/details/39993415" target="_blank" rel="noopener">https://blog.csdn.net/hewence1/article/details/39993415</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Kyne</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Thinking is the proof of one's life.</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/www-gitkyne-com/"># www.gitkyne.com</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();" target="_blank" rel="noopener">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/04/02/%E6%94%B6%E9%9B%86%E4%BA%86%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84Android%E6%A1%86%E6%9E%B6%EF%BC%8C%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B/">收集了一些常用的Android框架，记录一下</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Kyne | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
