@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kyne">
+
+
+
+
+
+<title>Android字节码插桩优化双击 | KyneZone</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kyne&#39;s Zone</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kyne&#39;s Zone</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Android字节码插桩优化双击</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Kyne</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 8, 2020&nbsp;&nbsp;14:32:53</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Android字节码插桩优化双击"><a href="#Android字节码插桩优化双击" class="headerlink" title="Android字节码插桩优化双击"></a>Android字节码插桩优化双击</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>产品想对多次快速点击做一下优化，想要的效果就是双击不会打开多次。<br>但是从开发角度来说，我可以用kotlin的拓展方法来调整这个，但是之前的历史债务可能会把我让我有点手足无措，同时java代码也会有问题。<br>有没有什么方法可以让开发可以投机取巧呢，我想到了去年项目里写到的插桩埋点的方式，是不是我只要在编译的时候编织插入字节码就可以解决这个问题了。</p>
+<h2 id="transform简介"><a href="#transform简介" class="headerlink" title="transform简介"></a>transform简介</h2><p>在打包流程中，我们知道生成.class文件后，利用dx工具生成.dex文件，而利用Transform API可以在生成.class文件后修改.class文件，从而修改源码。我们将Transform注册到AppExtension中，在java compile Task执行后会执行Tramsform类型的task。</p>
+<img src="/2020/05/08/Android%E5%AD%97%E8%8A%82%E7%A0%81%E6%8F%92%E6%A1%A9%E4%BC%98%E5%8C%96%E5%8F%8C%E5%87%BB/transform.png" height="450" width="400">
+
+<h2 id="具体开发"><a href="#具体开发" class="headerlink" title="具体开发"></a>具体开发</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>首先先创建一个groovy的module，然后初始化一个gradle插件。</p>
+<img src="/2020/05/08/Android%E5%AD%97%E8%8A%82%E7%A0%81%E6%8F%92%E6%A1%A9%E4%BC%98%E5%8C%96%E5%8F%8C%E5%87%BB/gradle插件.png" height="60" width="400">
+
+<p>声明一个gradle-plugins 这个基础<br><a href="https://blog.csdn.net/a296777513/article/details/90665134" target="_blank" rel="noopener">https://blog.csdn.net/a296777513/article/details/90665134</a> 这个博客内有基础的流程操作</p>
+<h3 id="构建transform"><a href="#构建transform" class="headerlink" title="构建transform"></a>构建transform</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">class DoubleTabTransform extends Transform &#123;</span><br><span class="line"></span><br><span class="line">    Project project</span><br><span class="line"></span><br><span class="line">    DoubleTabTransform(Project project) &#123;</span><br><span class="line">        this.project = project</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    String getName() &#123;</span><br><span class="line">        return &quot;DoubleTabTransform&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    Set&lt;QualifiedContent.ContentType&gt; getInputTypes() &#123;</span><br><span class="line">        return TransformManager.CONTENT_JARS</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    Set&lt;? super QualifiedContent.Scope&gt; getScopes() &#123;</span><br><span class="line">        return TransformManager.SCOPE_FULL_PROJECT</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    boolean isIncremental() &#123;</span><br><span class="line">        return false</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException &#123;</span><br><span class="line">        final DoubleTapDelegate injectHelper = new DoubleTapDelegate()</span><br><span class="line">        BaseTransform baseTransform = new BaseTransform(transformInvocation, new TransformCallBack() &#123;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            byte[] processJarClass(String className, byte[] classBytes, BaseTransform transform) &#123;</span><br><span class="line">                if (ClassUtils.checkClassName(className)) &#123;</span><br><span class="line">                    return injectHelper.transformByte(classBytes)</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return null</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            File processClass(File dir, File classFile, File tempDir, BaseTransform transform) &#123;</span><br><span class="line">                String absolutePath = classFile.absolutePath.replace(dir.absolutePath + File.separator, &quot;&quot;)</span><br><span class="line">                String className = ClassUtils.path2Classname(absolutePath)</span><br><span class="line">                if (ClassUtils.checkClassName(className)) &#123;</span><br><span class="line">                    return injectHelper.beginTransform(className, classFile, transform.context.getTemporaryDir())</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return null</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        baseTransform.startTransform()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码对transform 以及classvisitor代码进行了一次抽象封装，方便后续如果有类似的插入逻辑可以快速接入开发。<br>主要的逻辑代码是对jar包以及.class文件进行扫描，当文件符合修改标砖的情况下会回调文件修改的方法，然后基于asm的classvisitor 对文件进行访问操作。</p>
+<h3 id="ClassVisitor机制"><a href="#ClassVisitor机制" class="headerlink" title="ClassVisitor机制"></a>ClassVisitor机制</h3><p>这个可以看下网上的资料，我这边就不多过于简述了， 简单的说就是构造了一个类访问器，然后顺序的读取类的所以属性，方法，以及方法的每一行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">class ClassFilterVisitor extends ClassVisitor &#123;</span><br><span class="line"></span><br><span class="line">    private String[] interfaces</span><br><span class="line">    boolean visitedStaticBlock = false</span><br><span class="line">    private String owner</span><br><span class="line"></span><br><span class="line">    ClassFilterVisitor(ClassVisitor classVisitor) &#123;</span><br><span class="line">        super(Opcodes.ASM5, classVisitor)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    void visit(int version, int access, String name, String signature, String superName, String[] interfaces) &#123;</span><br><span class="line">        super.visit(version, access, name, signature, superName, interfaces)</span><br><span class="line">        this.interfaces = interfaces</span><br><span class="line">        if (interfaces != null &amp;&amp; interfaces.length &gt; 0) &#123;</span><br><span class="line">            for (Map.Entry&lt;String, MethodCell&gt; entry : MethodHelper.sInterfaceMethods.entrySet()) &#123;</span><br><span class="line">                MethodCell cell = entry.value</span><br><span class="line">                if (cell != null &amp;&amp; interfaces.contains(cell.parent)) &#123;</span><br><span class="line">                    visitedStaticBlock = true</span><br><span class="line">                    this.owner = name</span><br><span class="line">                    cv.visitField(Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, &quot;doubleTap&quot;,</span><br><span class="line">                            &quot;Lcom/hellobike/doubleclickplugin/sample/test/DoubleTapCheck;&quot;,</span><br><span class="line">                            signature, null)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) &#123;</span><br><span class="line">        return super.visitField(access, name, descriptor, signature, value)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    MethodVisitor visitMethod(int access, String name,</span><br><span class="line">                              String desc, String signature, String[] exceptions) &#123;</span><br><span class="line">        if (interfaces != null &amp;&amp; interfaces.length &gt; 0) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                if (visitedStaticBlock &amp;&amp; name == &quot;&lt;init&gt;&quot;) &#123;</span><br><span class="line">                    MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions)</span><br><span class="line">                    return new InitBlockVisitor(methodVisitor, owner)</span><br><span class="line">                &#125;</span><br><span class="line">                MethodCell cell = MethodHelper.sInterfaceMethods.get(name + desc)</span><br><span class="line">                if (cell != null &amp;&amp; interfaces.contains(cell.parent)) &#123;</span><br><span class="line">                    MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions)</span><br><span class="line">                    CheckVisitor mv = new CheckVisitor(methodVisitor, owner)</span><br><span class="line">                    return mv</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return super.visitMethod(access, name, desc, signature, exceptions)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改前的类"><a href="#修改前的类" class="headerlink" title="修改前的类"></a>修改前的类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class TestJavaClickListener implements View.OnClickListener &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onClick(View v) &#123;</span><br><span class="line">        Log.i(&quot;onClick&quot;, &quot;1&quot;);</span><br><span class="line">        Log.i(&quot;onClick&quot;, &quot;2&quot;);</span><br><span class="line">        Log.i(&quot;onClick&quot;, &quot;3&quot;);</span><br><span class="line">        Log.i(&quot;onClick&quot;, &quot;4&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="修改后的类"><a href="#修改后的类" class="headerlink" title="修改后的类"></a>修改后的类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class TestJavaClickListener implements OnClickListener &#123;</span><br><span class="line">    private final DoubleTapCheck doubleTap = new DoubleTapCheck();</span><br><span class="line"></span><br><span class="line">    public TestJavaClickListener() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onClick(View var1) &#123;</span><br><span class="line">        if (this.doubleTap.isNotDoubleTap()) &#123;</span><br><span class="line">            Log.i(&quot;onClick&quot;, &quot;1&quot;);</span><br><span class="line">            Log.i(&quot;onClick&quot;, &quot;2&quot;);</span><br><span class="line">            Log.i(&quot;onClick&quot;, &quot;3&quot;);</span><br><span class="line">            Log.i(&quot;onClick&quot;, &quot;4&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是项目内的类访问器，其中visit方法代表类被访问了，会返回这个类继承的接口等等基础参数。<br>我在这个方法插入了一个引用的索引，简单的说声明了一个 DoubleTapCheck doubleTap;<br>然后就是classvistior的visitMethod，这个是我们主要要调整的地方，其中一个关键点是我们需要修改两个地方，一个类的初始化，另外一个onClick方法。</p>
+<h4 id="其中init方法我们回去给doubletap-完成初始化操作，下面我们来讲下InitBlockVisitor。"><a href="#其中init方法我们回去给doubletap-完成初始化操作，下面我们来讲下InitBlockVisitor。" class="headerlink" title="其中init方法我们回去给doubletap 完成初始化操作，下面我们来讲下InitBlockVisitor。"></a>其中init方法我们回去给doubletap 完成初始化操作，下面我们来讲下InitBlockVisitor。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class InitBlockVisitor extends MethodVisitor &#123;</span><br><span class="line">    private String owner;</span><br><span class="line"></span><br><span class="line">    InitBlockVisitor(MethodVisitor mv, String owner) &#123;</span><br><span class="line">        super(Opcodes.ASM5, mv);</span><br><span class="line">        this.owner = owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void visitInsn(int opcode) &#123;</span><br><span class="line">        if ((opcode &gt;= Opcodes.IRETURN &amp;&amp; opcode &lt;= Opcodes.RETURN)</span><br><span class="line">                || opcode == Opcodes.ATHROW) &#123;</span><br><span class="line">            mv.visitVarInsn(Opcodes.ALOAD, 0);</span><br><span class="line">            mv.visitTypeInsn(Opcodes.NEW, &quot;com/hellobike/doubleclickplugin/sample/test/DoubleTapCheck&quot;);</span><br><span class="line">            mv.visitInsn(Opcodes.DUP);</span><br><span class="line">            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, &quot;com/hellobike/doubleclickplugin/sample/test/DoubleTapCheck&quot;,</span><br><span class="line">                    &quot;&lt;init&gt;&quot;, &quot;()V&quot;, false);</span><br><span class="line">            mv.visitFieldInsn(Opcodes.PUTFIELD, owner, &quot;doubleTap&quot;,</span><br><span class="line">                    &quot;Lcom/hellobike/doubleclickplugin/sample/test/DoubleTapCheck;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        super.visitInsn(opcode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码只完成了一件事情，就是在init 之后执行new DoubleTapCheck();这个操作。<br>这边我使用了asm的一个idea的插件 ASM ByteCode Viewer ,借助这个类你可以简单的把你想插入的代码的字节码都观察出来，之后再去用asm插入你想要的代码。</p>
+<h4 id="最后我们修改了onClick方法"><a href="#最后我们修改了onClick方法" class="headerlink" title="最后我们修改了onClick方法"></a>最后我们修改了onClick方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class CheckVisitor extends MethodVisitor &#123;</span><br><span class="line">    private String owner;</span><br><span class="line"></span><br><span class="line">    CheckVisitor(MethodVisitor mv, String owner) &#123;</span><br><span class="line">        super(Opcodes.ASM5, mv);</span><br><span class="line">        this.owner = owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void visitCode() &#123;</span><br><span class="line">        mv.visitVarInsn(Opcodes.ALOAD, 0);</span><br><span class="line">        mv.visitFieldInsn(Opcodes.GETFIELD, owner, &quot;doubleTap&quot;,</span><br><span class="line">                &quot;Lcom/hellobike/doubleclickplugin/sample/test/DoubleTapCheck;&quot;);</span><br><span class="line">        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, &quot;com/hellobike/doubleclickplugin/sample/test/DoubleTapCheck&quot;,</span><br><span class="line">                &quot;isNotDoubleTap&quot;, &quot;()Z&quot;, false);</span><br><span class="line">        Label label = new Label();</span><br><span class="line">        mv.visitJumpInsn(Opcodes.IFNE, label);</span><br><span class="line">        mv.visitInsn(Opcodes.RETURN);</span><br><span class="line">        mv.visitLabel(label);</span><br><span class="line">        super.visitCode();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个代码就比较少了，他只做了一件事情，就是在onClick方法的最前面插入doubleTap.isNotDoubleTap()的逻辑判断。</p>
+<h4 id="条件语句与label分析"><a href="#条件语句与label分析" class="headerlink" title="条件语句与label分析"></a>条件语句与label分析</h4><p>下面是一个OnClickListener 的插桩字节码，我们会通过分析这个类了解label的用法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public class com/hellobike/doubleclickplugin/sample/TestJavaClickListener implements android/view/View$OnClickListener &#123;</span><br><span class="line"></span><br><span class="line">  // access flags 0x609</span><br><span class="line">  public static abstract INNERCLASS android/view/View$OnClickListener android/view/View OnClickListener</span><br><span class="line"></span><br><span class="line">  // access flags 0x12</span><br><span class="line">  private final Lcom/hellobike/doubleclickplugin/sample/test/DoubleTapCheck; doubleTap</span><br><span class="line"></span><br><span class="line">  // access flags 0x1</span><br><span class="line">  public &lt;init&gt;()V</span><br><span class="line">    ALOAD 0</span><br><span class="line">    INVOKESPECIAL java/lang/Object.&lt;init&gt; ()V</span><br><span class="line">    ALOAD 0</span><br><span class="line">    NEW com/hellobike/doubleclickplugin/sample/test/DoubleTapCheck</span><br><span class="line">    DUP</span><br><span class="line">    INVOKESPECIAL com/hellobike/doubleclickplugin/sample/test/DoubleTapCheck.&lt;init&gt; ()V</span><br><span class="line">    PUTFIELD com/hellobike/doubleclickplugin/sample/TestJavaClickListener.doubleTap : Lcom/hellobike/doubleclickplugin/sample/test/DoubleTapCheck;</span><br><span class="line">    RETURN</span><br><span class="line">    MAXSTACK = 3</span><br><span class="line">    MAXLOCALS = 1</span><br><span class="line"></span><br><span class="line">  // access flags 0x1</span><br><span class="line">  public onClick(Landroid/view/View;)V</span><br><span class="line">    ALOAD 0</span><br><span class="line">    GETFIELD com/hellobike/doubleclickplugin/sample/TestJavaClickListener.doubleTap : Lcom/hellobike/doubleclickplugin/sample/test/DoubleTapCheck;</span><br><span class="line">    INVOKEVIRTUAL com/hellobike/doubleclickplugin/sample/test/DoubleTapCheck.isNotDoubleTap ()Z</span><br><span class="line">    IFNE L0</span><br><span class="line">    RETURN</span><br><span class="line">   L0</span><br><span class="line">    LDC &quot;onClick&quot;</span><br><span class="line">    LDC &quot;1&quot;</span><br><span class="line">    INVOKESTATIC android/util/Log.i (Ljava/lang/String;Ljava/lang/String;)I</span><br><span class="line">    POP</span><br><span class="line">    LDC &quot;onClick&quot;</span><br><span class="line">    LDC &quot;2&quot;</span><br><span class="line">    INVOKESTATIC android/util/Log.i (Ljava/lang/String;Ljava/lang/String;)I</span><br><span class="line">    POP</span><br><span class="line">    LDC &quot;onClick&quot;</span><br><span class="line">    LDC &quot;3&quot;</span><br><span class="line">    INVOKESTATIC android/util/Log.i (Ljava/lang/String;Ljava/lang/String;)I</span><br><span class="line">    POP</span><br><span class="line">    LDC &quot;onClick&quot;</span><br><span class="line">    LDC &quot;4&quot;</span><br><span class="line">    INVOKESTATIC android/util/Log.i (Ljava/lang/String;Ljava/lang/String;)I</span><br><span class="line">    POP</span><br><span class="line">    RETURN</span><br><span class="line">    MAXSTACK = 2</span><br><span class="line">    MAXLOCALS = 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们从第24行开始观察起。首先我们获取了0位置就是view，然后我们获取了doubleTap 的实例，调用了doubleTab.isNotDoubleTap 的方法。<br>27行是关键，这里判断的isNotDoubleTap的结果然后跳转到下面的方法块。其中最后有个L0，我一开始也不能理解这个是什么意思，最后用javap解析了字节码之后发现其实这个L0其实映射到的是下面的方法块的L0,而在真实的字节码中，这个就是对应的行数。而这个地方就是我们使用的Label标签，那么label标签顾名思义，就是标记一个方法块的行数。就是两个label之间的代码行数。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Kyne</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Thinking is the proof of one's life.</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/www-gitkyne-com/"># www.gitkyne.com</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();" target="_blank" rel="noopener">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/04/28/Android%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">Android内存泄漏</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Kyne | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
