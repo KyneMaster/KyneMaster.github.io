@@ -12,7 +12,7 @@
 
 
 
-<title>埋坑记录 | KyneZone</title>
+<title>Android开发工程师高效成长指南 | KyneZone</title>
 
 
 
@@ -174,7 +174,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">埋坑记录</h1>
+            <h1 class="post-title">Android开发工程师高效成长指南</h1>
             
                 <div class="post-meta">
                     
@@ -183,7 +183,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">May 19, 2020&nbsp;&nbsp;11:46:48</a>
+                        Date: <a href="#">October 8, 2020&nbsp;&nbsp;12:55:20</a>
                         </span>
                     
                     
@@ -192,33 +192,73 @@
         </header>
 
         <div class="post-content">
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h3 id="ARouter"><a href="#ARouter" class="headerlink" title="ARouter"></a>ARouter</h3><ol>
-<li><p><strong>命名分组引发的问题</strong></p>
-<ul>
-<li><p>ARouter主要应用于组件化架构中，使用方法：</p>
-<ol>
-<li>定义path路径，要求至少两个斜杠，比如：<code>/user/login</code></li>
-<li>通过类注解@Route注入目标位置，比如在LoginActivity上面<code>@Route(path = “/user/login”)</code></li>
-</ol>
-</li>
-<li><p><strong>问题：</strong><br>如果这时在另一个module模块，也使用了路径<code>/user/xxxx</code>，就会出现问题。</p>
-</li>
-<li><p><strong>原因：</strong><br>ARouter会根据第一个斜杠下“user”分组，点击LoginActivity查看可发现，自动生成了一个映射类：<code>ARouter$$Group$$user</code>，而这个类是获取映射关系的关键类。在_navigation获取的时候，只有最后一个<code>ARouter$$Group$$user</code>才会生效。</p>
-</li>
-<li><p><strong>解决：</strong><br>不同模块的group命名不可重复。</p>
-</li>
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>性能优化其实一块很深很深的知识领域，对于Android来说，它从最上层的应用层，顺延着Framework层、ART/Davilk、Linux内核层，一直到最底层的硬件层，都有我们需要深入研究的技术点。因此，根据这一思路，我根据我自身的情况，定制了一套自下而上的学习路线。下面，我就来说一下详细的学习方案。</p>
+<p>对于学习资源来说，最重要的就是高质量和成体系的知识。因此，在学习的时候，我们必须以经典的高质量书籍为主，其他优秀的文章、视频教程为辅。</p>
+<h3 id="一、成长路线规划"><a href="#一、成长路线规划" class="headerlink" title="一、成长路线规划"></a>一、成长路线规划</h3><p>首先是数学和算法，要想成为世界上最顶尖的程序员，这两门功课必须要打好基础。</p>
+<h4 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h4><ul>
+<li>数学之美</li>
+<li>程序员的数学基础课（极客时间）<h4 id="数据结构和算法"><a href="#数据结构和算法" class="headerlink" title="数据结构和算法"></a>数据结构和算法</h4></li>
+<li>大话数据结构</li>
+<li>算法图解</li>
+<li>剑指Offer</li>
+<li>数据结构与算法之美（极客时间）</li>
+<li>算法面试通关（极客时间）</li>
+<li>LetteCode</li>
+<li>编程之美</li>
+<li>编程珠玑</li>
+<li>趣学算法</li>
+<li>算法（红本）<h4 id="硬件原理"><a href="#硬件原理" class="headerlink" title="硬件原理"></a>硬件原理</h4></li>
+<li>深入浅出计算机组成原理（极客时间）<h4 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h4></li>
+<li>计算机网络：自顶向下方法</li>
+<li>趣谈网络协议（极客时间）</li>
+<li>图解TCP/IP</li>
+<li>HTTP权威指南</li>
+<li>Wireshark网络分析就这么简单</li>
+<li>Wireshark网络分析的艺术</li>
+<li>Web性能权威指南</li>
+<li>Unix网络编程：卷1<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4></li>
+<li>现代操作系统</li>
+<li>鸟哥的Linux私房菜</li>
+<li>深入理解计算机系统</li>
+<li>Linux程序设计</li>
+<li>UNIX环境高级编程</li>
+<li>深入Linux内核架构</li>
+<li>性能之巅</li>
+<li>最强Android书</li>
+<li>Linux性能优化实战<h4 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h4></li>
+<li>编码</li>
+<li>编译原理<h4 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h4></li>
+<li>Java编程思想</li>
+<li>Java并发编程实战（极客时间）</li>
+<li>Java并发编程的艺术</li>
+<li>Java核心技术36讲（极客时间）</li>
+<li>深入理解JVM</li>
+<li>深入拆解JVM（极客时间）</li>
+<li>揭秘JVM</li>
+<li>程序员的自我修养—链接、装载与库</li>
+<li>垃圾回收算法手册</li>
+<li>深入理解Android JVM ART</li>
+<li>深入解析Android 虚拟机<h4 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h4></li>
+<li>HeadFirst设计模式</li>
+<li>Android源码设计模式</li>
+<li>Android进阶解密</li>
+<li>Android框架解密</li>
+<li>深入理解Android内核设计思想</li>
+<li>Android系统源代码情景分析<h4 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h4></li>
+<li>More Effective C++</li>
+<li>Effective Java</li>
+<li>Kotlin实战、快速上手Kotlin开发（极客时间）<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4></li>
+<li>第一行代码</li>
+<li>Android开发进阶 从小工到专家</li>
+<li>Android进阶之光</li>
+<li>Android开发艺术探索<h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h4></li>
+<li>Android开发高手课（极客时间）</li>
+<li>Android应用性能优化最佳实践<h4 id="组件化、热修复、插件化"><a href="#组件化、热修复、插件化" class="headerlink" title="组件化、热修复、插件化"></a>组件化、热修复、插件化</h4></li>
+<li>Android组件化架构</li>
+<li>Android热修复技术原理</li>
+<li>Android插件化开发指南<h3 id="二、如何读书？"><a href="#二、如何读书？" class="headerlink" title="二、如何读书？"></a>二、如何读书？</h3>首先，我们需要定一个学习计划，比如一年读50本书，一周一本。读书的时候可以根据同一个技能点按照难度选取3到5本书阅读，其中最好的书读3遍。对于碎片化的时间，我们也可以充分利用起来对某一个知识点进行系统学习，以求真正地将其完全掌握。最后，这里再重申一遍，要想真正掌握一本书的核心内容，需要读三遍。第一遍：细读，目的在于完整阅读全书，并且划出重点，写上读书笔记；一个月后读第二遍：扫读，主要快速翻阅第一遍阅读时做的笔记和划的重点，目的在于加深记忆；半年后第三遍：忆读，读的时候只看目录，然后去回想内容，如果回想不起来，再去进行扫读。这样三遍下来，基本上一本书的核心内容就能够很好的吸收。</li>
 </ul>
-</li>
-</ol>
-<h3 id="RecyclerView"><a href="#RecyclerView" class="headerlink" title="RecyclerView"></a>RecyclerView</h3><ol>
-<li><strong>notifyItemRangeInserted()导致的position错位</strong><ul>
-<li><code>notifyItemRangeInserted()</code>方法有动画效果的官推方法，用于插入数据</li>
-<li><strong>问题：</strong><br>notifyItemRangeInserted()导致的position错位，原列表的position不变，而新增加的列表的position是新列表的，但是获取的itemBean正确。导致不能准备定位item位置。</li>
-<li><strong>原因：</strong><br>notifyItemRangeInserted()在调用后，会获取RecyclerView的四级缓存中的viewholder，第一步获取屏幕内的viewholder缓存，而添加之后，只是利用复用增加了item的数量，并没有重新加载<code>onBindViewHolder()</code>方法，就导致它的回调依然是原position，位置错乱。</li>
-<li><strong>解决：</strong><br><code>notifyItemRangeChanged()</code>刷新内部数据集，动画效果依然保留。</li>
-</ul>
-</li>
-</ol>
+<h3 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h3><p>当你对某一个细分领域有非常深入的理解后，比如性能优化，音视频等，其实，此时许多底层知识都已经打通了。假如，你现在再去学习前端、Vue/React或者后端、其它领域的知识，都能够在较短时间内快速领悟到中高级层面的知识。我想，这就是一通百通的能力吧。</p>
 
         </div>
 
@@ -252,7 +292,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/www-gitkyne-com/"># www.gitkyne.com</a>
+                        <a href="/tags/%E6%91%98%E8%87%AAhttps-jsonchao-github-io/"># 摘自https://jsonchao.github.io/</a>
                     
                         
                 </span>
@@ -265,10 +305,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/05/24/Activity%E7%9B%B8%E5%85%B3%E5%A4%84%E7%90%86%E8%AE%B0%E5%BD%95/">Activity相关处理记录</a>
             
-            
-            <a class="next" rel="next" href="/2020/05/08/Android%E5%AD%97%E8%8A%82%E7%A0%81%E6%8F%92%E6%A1%A9%E4%BC%98%E5%8C%96%E5%8F%8C%E5%87%BB/">Android字节码插桩优化双击</a>
+            <a class="next" rel="next" href="/2020/05/24/Activity%E7%9B%B8%E5%85%B3%E5%A4%84%E7%90%86%E8%AE%B0%E5%BD%95/">Activity相关处理记录</a>
             
         </section>
 

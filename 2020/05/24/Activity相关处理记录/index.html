@@ -12,7 +12,7 @@
 
 
 
-<title>埋坑记录 | KyneZone</title>
+<title>Activity相关处理记录 | KyneZone</title>
 
 
 
@@ -174,7 +174,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">埋坑记录</h1>
+            <h1 class="post-title">Activity相关处理记录</h1>
             
                 <div class="post-meta">
                     
@@ -183,7 +183,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">May 19, 2020&nbsp;&nbsp;11:46:48</a>
+                        Date: <a href="#">May 24, 2020&nbsp;&nbsp;15:52:05</a>
                         </span>
                     
                     
@@ -192,31 +192,15 @@
         </header>
 
         <div class="post-content">
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h3 id="ARouter"><a href="#ARouter" class="headerlink" title="ARouter"></a>ARouter</h3><ol>
-<li><p><strong>命名分组引发的问题</strong></p>
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><ol>
+<li><p>Activity中finish() onDestroy() 和System.exit()的区别</p>
 <ul>
-<li><p>ARouter主要应用于组件化架构中，使用方法：</p>
-<ol>
-<li>定义path路径，要求至少两个斜杠，比如：<code>/user/login</code></li>
-<li>通过类注解@Route注入目标位置，比如在LoginActivity上面<code>@Route(path = “/user/login”)</code></li>
-</ol>
-</li>
-<li><p><strong>问题：</strong><br>如果这时在另一个module模块，也使用了路径<code>/user/xxxx</code>，就会出现问题。</p>
-</li>
-<li><p><strong>原因：</strong><br>ARouter会根据第一个斜杠下“user”分组，点击LoginActivity查看可发现，自动生成了一个映射类：<code>ARouter$$Group$$user</code>，而这个类是获取映射关系的关键类。在_navigation获取的时候，只有最后一个<code>ARouter$$Group$$user</code>才会生效。</p>
-</li>
-<li><p><strong>解决：</strong><br>不同模块的group命名不可重复。</p>
-</li>
+<li>finish() 当前activiy被移除栈，但是没有释放资源。<br>安卓系统自己决定何时从内存中释放应用程序，只有等到没有可用内存时，会按照优先级释放部分应用</li>
+<li>onDestroy() 系统销毁了这个Activity的实例在内存中占据的空间，释放了资源。<br>当重新进入此Activity的时候，必须重新创建，执行onCreate()方法。</li>
+<li>System.exit(0) 直接KO整个Application</li>
 </ul>
 </li>
-</ol>
-<h3 id="RecyclerView"><a href="#RecyclerView" class="headerlink" title="RecyclerView"></a>RecyclerView</h3><ol>
-<li><strong>notifyItemRangeInserted()导致的position错位</strong><ul>
-<li><code>notifyItemRangeInserted()</code>方法有动画效果的官推方法，用于插入数据</li>
-<li><strong>问题：</strong><br>notifyItemRangeInserted()导致的position错位，原列表的position不变，而新增加的列表的position是新列表的，但是获取的itemBean正确。导致不能准备定位item位置。</li>
-<li><strong>原因：</strong><br>notifyItemRangeInserted()在调用后，会获取RecyclerView的四级缓存中的viewholder，第一步获取屏幕内的viewholder缓存，而添加之后，只是利用复用增加了item的数量，并没有重新加载<code>onBindViewHolder()</code>方法，就导致它的回调依然是原position，位置错乱。</li>
-<li><strong>解决：</strong><br><code>notifyItemRangeChanged()</code>刷新内部数据集，动画效果依然保留。</li>
-</ul>
+<li><p>finishAffinity()<br> 关闭你启动的当前activity栈中的所有的activity</p>
 </li>
 </ol>
 
@@ -265,10 +249,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/05/24/Activity%E7%9B%B8%E5%85%B3%E5%A4%84%E7%90%86%E8%AE%B0%E5%BD%95/">Activity相关处理记录</a>
+                <a class="prev" rel="prev" href="/2020/10/08/Android%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%AB%98%E6%95%88%E6%88%90%E9%95%BF%E6%8C%87%E5%8D%97/">Android开发工程师高效成长指南</a>
             
             
-            <a class="next" rel="next" href="/2020/05/08/Android%E5%AD%97%E8%8A%82%E7%A0%81%E6%8F%92%E6%A1%A9%E4%BC%98%E5%8C%96%E5%8F%8C%E5%87%BB/">Android字节码插桩优化双击</a>
+            <a class="next" rel="next" href="/2020/05/19/%E5%9F%8B%E5%9D%91%E8%AE%B0%E5%BD%95/">埋坑记录</a>
             
         </section>
 
