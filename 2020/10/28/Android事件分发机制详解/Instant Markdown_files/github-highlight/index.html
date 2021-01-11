@@ -12,7 +12,7 @@
 
 
 
-<title>Android事件分发机制详解 | KyneZone</title>
+<title>Android事件分发机制详解/Instant Markdown_files/github-highlight | KyneZone</title>
 
 
 
@@ -112,7 +112,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Android事件分发机制详解</h1>
+            <h1 class="post-title">Android事件分发机制详解/Instant Markdown_files/github-highlight</h1>
             
                 <div class="post-meta">
                     
@@ -121,7 +121,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 10, 2020&nbsp;&nbsp;10:08:57</a>
+                        Date: <a href="#">October 28, 2020&nbsp;&nbsp;17:27:06</a>
                         </span>
                     
                     
@@ -130,36 +130,106 @@
         </header>
 
         <div class="post-content">
-            <ol>
-<li><p>其本质是将点击事件（MotionEvent）传递到某个具体的View &amp; 处理的整个过程</p>
-</li>
-<li><p>事件传递的顺序：Activity -&gt; ViewGroup -&gt; View</p>
-</li>
-<li><p>Activity的事件分发机制</p>
-</li>
-</ol>
-<p><img src="/2020/10/10/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/Activity%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.png" alt="t"></p>
-<ol start="4">
-<li>ViewGroup的事件分发机制</li>
-</ol>
-<p><img src="/2020/10/10/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/viewgroup%E5%88%86%E5%8F%91.png" alt="t"></p>
-<ol start="5">
-<li>View的事件分发机制</li>
-</ol>
-<p><img src="/2020/10/10/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/View%E5%88%86%E5%8F%91.png" alt="t"></p>
-<ol start="6">
-<li>事件分发机制整理</li>
-</ol>
-<p><img src="/2020/10/10/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6.png" alt="t"></p>
-<ol start="7">
-<li>事件分发业务流程</li>
-</ol>
-<p><img src="/2020/10/10/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B.png" alt="t"></p>
-<ol start="8">
-<li>总结</li>
-</ol>
-<p><img src="/2020/10/10/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/%E6%80%BB%E7%BB%93.png" alt="t"></p>
+            /*
 
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+</vast@whiteants.net>
         </div>
 
         
@@ -201,10 +271,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/10/28/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/Instant%20Markdown_files/github-markdown/">Android事件分发机制详解/Instant Markdown_files/github-markdown</a>
+                <a class="prev" rel="prev" href="/2020/10/28/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/Instant%20Markdown_files/socket.io/">Android事件分发机制详解/Instant Markdown_files/socket.io</a>
             
             
-            <a class="next" rel="next" href="/2020/10/08/Android%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%AB%98%E6%95%88%E6%88%90%E9%95%BF%E6%8C%87%E5%8D%97/">Android开发工程师高效成长指南</a>
+            <a class="next" rel="next" href="/2020/10/28/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3/Instant%20Markdown_files/github-markdown/">Android事件分发机制详解/Instant Markdown_files/github-markdown</a>
             
         </section>
 
